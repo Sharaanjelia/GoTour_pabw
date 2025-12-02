@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             PackageSeeder::class,
             BlogPostSeeder::class,
-            DestinationSeeder::class,
+            // DestinationSeeder::class, // Removed - Destination feature deleted
             ServiceSeeder::class,
             DiscountSeeder::class,
             PhotoRecommendationSeeder::class,
