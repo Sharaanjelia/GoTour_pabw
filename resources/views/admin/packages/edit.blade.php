@@ -11,39 +11,50 @@
 
     <form action="{{ route('admin.packages.update', $package) }}" method="POST" enctype="multipart/form-data" class="card">
         @csrf @method('PUT')
-        <label class="form-label mb-2">Judul
+        
+        <label class="form-label">Judul Paket *
             <input type="text" name="title" value="{{ old('title', $package->title) }}" class="form-input" required>
         </label>
-        <br>
-        <label class="form-label mb-2">Ringkasan
-            <textarea name="excerpt" class="form-input" rows="2">{{ old('excerpt', $package->excerpt) }}</textarea>
+        
+        <label class="form-label" style="margin-top: 1rem;">Ringkasan
+            <textarea name="excerpt" class="form-input" rows="2" placeholder="Ringkasan singkat untuk preview">{{ old('excerpt', $package->excerpt) }}</textarea>
         </label>
-        <br>
-        <label class="form-label mb-2">Deskripsi
-            <textarea name="description" class="form-input" rows="6">{{ old('description', $package->description) }}</textarea>
+        
+        <label class="form-label" style="margin-top: 1rem;">Deskripsi Lengkap
+            <textarea name="description" class="form-input" rows="6" placeholder="Deskripsi detail paket wisata">{{ old('description', $package->description) }}</textarea>
         </label>
-        <br>
-        <label class="form-label mb-2">Durasi
-            <input type="text" name="duration" value="{{ old('duration', $package->duration) }}" class="form-input">
-        </label>
-        <br>
-        <label class="form-label mb-2">Harga
-            <input type="number" name="price" value="{{ old('price', $package->price) }}" class="form-input">
-        </label>
-        <br>
-        <label class="form-label mb-2">Gambar Sampul (opsional)
-            <input id="coverImage" type="file" name="cover_image" class="form-input file-input">
-            <div style="margin-top:.6rem"><img id="preview" class="preview-img" src="{{ $package->cover_image_url ?? 'https://via.placeholder.com/800x300?text=Preview' }}" alt="preview"></div>
-        </label>
-        <br>
-        <div class="flex gap-3 items-center mt-4">
-            <label><input type="checkbox" name="featured" {{ $package->featured ? 'checked' : '' }}> Tampilkan sebagai featured</label>
-            <label><input type="checkbox" name="is_active" {{ $package->is_active ? 'checked' : '' }}> Aktif</label>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+            <label class="form-label">Durasi
+                <input type="text" name="duration" value="{{ old('duration', $package->duration) }}" class="form-input" placeholder="Contoh: 2 Hari 1 Malam">
+            </label>
+            
+            <label class="form-label">Harga per Orang
+                <input type="number" name="price" value="{{ old('price', $package->price) }}" class="form-input" placeholder="Contoh: 2000000">
+            </label>
         </div>
-        <br>
-        <div class="mt-4">
-            <button class="btn btn-primary">Perbarui</button>
-            <a href="{{ route('admin.packages.index') }}" class="ml-2 text-gray-600">Batal</a>
+        
+        <label class="form-label" style="margin-top: 1rem;">Gambar Sampul
+            <input id="coverImage" type="file" name="cover_image" class="form-input file-input" accept="image/*">
+            <div style="margin-top: 0.6rem;">
+                <img id="preview" class="preview-img" src="{{ $package->cover_image_url ?? 'https://via.placeholder.com/800x300?text=Preview' }}" alt="preview">
+            </div>
+        </label>
+        
+        <div style="margin-top: 1rem; display: flex; gap: 2rem;">
+            <label style="display: flex; align-items: center; gap: 0.5rem;">
+                <input type="checkbox" name="featured" {{ $package->featured ? 'checked' : '' }}> 
+                <span style="font-weight: 500;">Featured (Tampilkan di halaman utama)</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.5rem;">
+                <input type="checkbox" name="is_active" {{ $package->is_active ? 'checked' : '' }}> 
+                <span style="font-weight: 500;">Aktif (Tampilkan di website)</span>
+            </label>
+        </div>
+        
+        <div style="margin-top: 1.5rem; display: flex; gap: 0.5rem;">
+            <button class="btn btn-primary">Perbarui Paket</button>
+            <a href="{{ route('admin.packages.index') }}" class="btn" style="background: #6b7280; color: white;">Batal</a>
         </div>
     </form>
 </div>

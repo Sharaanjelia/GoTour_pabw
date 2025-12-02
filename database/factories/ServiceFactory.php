@@ -17,7 +17,7 @@ class ServiceFactory extends Factory
             'name' => $name,
             'slug' => Str::slug($name) . '-' . $this->faker->unique()->numberBetween(1,999),
             'description' => $this->faker->sentence(),
-            'price' => $this->faker->numberBetween(50000,500000),
+            'image' => null, // Will be uploaded via admin
             'is_active' => true,
         ];
     }
