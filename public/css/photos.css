@@ -1,0 +1,93 @@
+/* photos.css — visual card grid for /foto page
+   Matches screenshot: rounded images, white cards, subtle shadow, title centered, small category text */
+
+.photos-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 14px;
+}
+
+.photos-heading {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  text-align: left;
+  color: #222;
+}
+
+.photos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+@media (min-width: 768px) {
+  .photos-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.photo-card {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.06);
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+  transition: transform .18s ease, box-shadow .18s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.photo-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+.photo-card__image {
+  width: 100%;
+  height: 190px;
+  overflow: hidden;
+  display: block;
+  background: #f1f5f9;
+}
+
+.photo-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.photo-card__body {
+  padding: 14px 12px 18px;
+  text-align: center;
+}
+
+.photo-card__title {
+  font-weight: 700;
+  margin: 6px 0 8px;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.photo-card__category {
+  color: #6b7280; /* gray-500 */
+  font-size: 13px;
+  margin: 0;
+}
+
+/* nicer spacing for the pagination */
+.photos-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 22px;
+}
+
+/* small helper for image corners matching card */
+.photo-card__image img { border-radius: 8px 8px 0 0; }
+
+/* make grid look like screenshot — add subtle outer padding for cards on small screens */
+@media (max-width: 640px) {
+  .photo-card { margin: 0; }
+}

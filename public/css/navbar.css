@@ -1,0 +1,94 @@
+/* Navbar styles — consolidated so the navbar looks correct across pages */
+:root{
+  --primary: #059669; /* brand green */
+  --nav-bg: rgba(0,0,0,0.65);
+  --text-light: #ffffff;
+  --text-dark: #222;
+}
+
+/* header wrapper - provides background and sticky behavior */
+.header {
+  background: linear-gradient(135deg, var(--primary) 0%, #047857 100%);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+}
+
+.site-navbar {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-navbar-inner{
+  display:flex;
+  align-items:center; /* align logo, nav, and auth buttons horizontally */
+  justify-content:space-between;
+  gap: 1rem;
+  width:100%;
+}
+.navbar-left{ display:flex; align-items:center; gap: .75rem; }
+.navbar-center{ flex:1; display:flex; justify-content:center; }
+.navbar-right{ display:flex; align-items:center; gap: .5rem; }
+
+.navbar-brand img{ height:48px; width:auto; display:block; }
+.navbar-brand{ display:flex; align-items:center; gap:.5rem; color:var(--text-light); text-decoration:none; }
+
+/* main nav */
+.nav-links { list-style: none; margin:0; padding:0; }
+.nav-links--desktop { display:flex; gap:1.25rem; align-items:center; }
+.nav-links--mobile { display:none; }
+.nav-links li { margin:0; }
+.nav-links a { color:var(--text-light); text-decoration:none; font-weight:600; padding:.45rem .25rem; border-radius:4px; }
+.nav-links a:hover { background: rgba(255,255,255,0.06); }
+.nav-links a.active{ background: rgba(255,255,255,0.12); }
+
+.auth-buttons { display:flex; gap:.5rem; align-items:center; }
+.auth-buttons--mobile { display:none; }
+.auth-buttons--desktop{ display:flex; }
+.login-btn{ background: transparent; border: 1px solid rgba(255,255,255,0.95); color:var(--text-light); padding:.45rem .9rem; border-radius:24px; text-decoration:none; font-weight:700; }
+.signup-btn{ background:white; color:var(--primary); padding:.45rem .9rem; border-radius:24px; text-decoration:none; font-weight:700; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+
+/* toggler */
+.navbar-toggler{ display:none; border:none; background:transparent; color:var(--text-light); font-size:1.35rem; margin-left:.5rem }
+
+/* Collapse handling for small screens - default is visible on desktop */
+.navbar-collapse{ display:none; }
+
+.user-controls{ display:flex; gap:.5rem; align-items:center; }
+.user-name{ color: rgba(255,255,255,0.9); font-weight:600; margin-right:.4rem; }
+.logout-btn{ background:transparent; color:rgba(255,255,255,0.9); border:1px solid rgba(255,255,255,0.06); padding:.3rem .6rem; border-radius:6px; font-weight:600 }
+
+/* ensure nav itself aligns center with the logo */
+.nav-links { align-items:center; }
+
+/* Small screens: hide links and show toggler */
+@media (max-width: 1024px){
+  .nav-links--desktop { display:none; }
+  .auth-buttons--desktop { display:none; }
+  .navbar-toggler{ display:block; }
+  .navbar-collapse.open{ display:flex; flex-direction:column; gap:0.5rem; padding: .75rem; border-radius:0 0 6px 6px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06)); }
+  .nav-links--mobile{ display:flex; flex-direction:column; width:100%; padding: .5rem 0; gap: .5rem }
+  .auth-buttons--mobile{ display:flex; margin-top:.5rem; gap:.5rem; }
+  .navbar-center{ display:none; }
+  .navbar-right{ display:none; }
+}
+
+/* small polish */
+.nav-links a{ transition: transform .12s ease, background .12s ease; }
+.nav-links a:hover{ transform: translateY(-2px); }
+.login-btn:hover{ transform: translateY(-2px); }
+.signup-btn:hover{ transform: translateY(-2px); }
+
+/* desktop - active link pill style to match screenshot */
+.nav-links--desktop a.active{ background: rgba(255,255,255,0.12); padding: .4rem .9rem; border-radius:8px; }
+
+/* desktop nav item tweaks */
+.nav-links--desktop a{ color:var(--text-light); text-decoration:none; font-weight:700; padding: .4rem .5rem; border-radius:6px; }
+
+/* Accessibility: improved focus styles */
+.nav-links a:focus, .login-btn:focus, .signup-btn:focus{ outline:2px solid rgba(255,255,255,0.2); outline-offset:3px; }
