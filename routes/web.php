@@ -35,17 +35,14 @@ Route::get('/discounts', [\App\Http\Controllers\DiscountController::class, 'inde
 Route::get('/foto', [\App\Http\Controllers\PhotoController::class, 'index'])->name('foto.index');
 Route::get('/testimoni', [\App\Http\Controllers\TestimonialController::class, 'index'])->name('testimoni.index');
 Route::post('/testimoni', [\App\Http\Controllers\TestimonialController::class, 'store'])->name('testimoni.store');
-// Note: deleted legacy route for POST /pembayaran to avoid conflict with resource routes for payments
-// Route::post('/pembayaran', [\App\Http\Controllers\PublicPaymentController::class, 'store'])->name('payments.store');
 
-// Admin routes (protected by auth + IsAdmin middleware)
+
 Route::middleware(['auth', \App\Http\Middleware\IsAdmin::class])->prefix('admin')->name('admin.')->group(function () {
-    // Admin landing -- redirect to useful admin page (packages). Prevents 404 when visiting /admin
     Route::get('/', function () {
         return redirect()->route('admin.packages.index');
     })->name('dashboard');
 
-    Route::resource('packages', AdminPackageController::class)->names('packages')->parameters(['packages' => 'package']);
+    Route::resource('packages', \App\Http\Controllers\Admin\PackageController::class)->names('packages')->parameters(['packages' => 'package']);
 
     // Admin resources for converted legacy pages
     Route::resource('blog', \App\Http\Controllers\Admin\BlogPostController::class)->names('blog')->parameters(['blog' => 'blog']);
@@ -71,8 +68,7 @@ Route::middleware(['auth', \App\Http\Middleware\IsAdmin::class])->prefix('admin'
     Route::post('users/{user}/toggle-admin', [\App\Http\Controllers\Admin\UserController::class, 'toggleAdmin'])->name('users.toggleAdmin');
 });
 
-// payments
-// Protected routes (must be logged in to create/edit/update/delete)
+
 Route::middleware('auth')->group(function(){
     Route::get('payments/create', [PaymentController::class, 'create'])->name('payments.create');
     Route::post('payments', [PaymentController::class, 'store'])->name('payments.store');

@@ -32,8 +32,6 @@
                 <div class="tour-card">
                     <div style="position:relative">
                         <div class="tour-cover">
-                               <!-- If the storage link is missing or the file 404s we fallback to an existing public image
-                                   (use a safe, present image instead of a missing placeholder) -->
                                <img src="{{ $package->cover_image_url ?? 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80' }}" alt="{{ $package->title }}" onerror="this.onerror=null;this.src='{{ asset('images/download.jpeg') }}';">
                         </div>
                         <div class="badge-left">-29%</div>
@@ -71,7 +69,6 @@
     </section>
 
         <script>
-            // Make filters and search update the page query string
             (function(){
                 const searchInput = document.getElementById('searchInput');
                 const buttons = document.querySelectorAll('.filter-btn');

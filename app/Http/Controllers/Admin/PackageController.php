@@ -60,12 +60,10 @@ class PackageController extends Controller
         }
 
         $data['slug'] = Str::slug($data['title']);
-        // convert checkbox presence to booleans
         $data['featured'] = $request->has('featured') ? true : false;
         $data['is_active'] = $request->has('is_active') ? true : false;
         $data['user_id'] = auth()->id();
 
-        // ensure slug uniqueness
         $base = $data['slug'];
         $i = 1;
         while (Package::where('slug', $data['slug'])->exists()) {
@@ -84,7 +82,7 @@ class PackageController extends Controller
 
     public function show(Package $package)
     {
-        // admin view for a single package
+        
         return view('admin.packages.show', compact('package'));
     }
 
@@ -102,7 +100,6 @@ class PackageController extends Controller
         ]);
 
         if ($request->hasFile('cover_image')) {
-            // remove old image if exists
             if ($old = $package->cover_image) {
                 if (str_starts_with($old, 'storage/')) {
                     $old = substr($old, strlen('storage/'));
@@ -114,11 +111,10 @@ class PackageController extends Controller
             $data['cover_image'] = $path;
         }
 
-        // normalize checkbox values
+
         $data['featured'] = $request->has('featured') ? true : false;
         $data['is_active'] = $request->has('is_active') ? true : false;
 
-        // if title changed, update slug
         if (!empty($data['title']) && $data['title'] !== $package->title) {
             $slug = Str::slug($data['title']);
             $base = $slug;
@@ -136,7 +132,7 @@ class PackageController extends Controller
 
     public function destroy(Package $package)
     {
-        // delete files associated
+        
         if ($old = $package->cover_image) {
             if (str_starts_with($old, 'storage/')) {
                 $old = substr($old, strlen('storage/'));
