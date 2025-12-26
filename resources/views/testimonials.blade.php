@@ -8,7 +8,32 @@
         <p>Berbagai pengalaman dan review dari pelanggan GoTour.</p>
     </div>
     <div class="container mx-auto py-8">
-        <!-- Daftar testimoni bisa ditampilkan di sini -->
+        @if($items->count())
+            <div class="testimonials-grid">
+                @foreach($items as $testimonial)
+                    <div class="testimonial-card">
+                        <div class="testimonial-image-wrapper">
+                            @if($testimonial->photo_url)
+                                <img src="{{ $testimonial->photo_url }}" alt="{{ $testimonial->name }}" class="testimonial-image">
+                            @else
+                                <div class="testimonial-placeholder">
+                                    <span style="font-size:3rem;">&#128100;</span>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="testimonial-content">
+                            <div class="testimonial-message">{{ $testimonial->message }}</div>
+                            <div class="testimonial-name">{{ $testimonial->name }}</div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div style="margin: 32px 0; text-align:center;">
+                {{ $items->links() }}
+            </div>
+        @else
+            <p class="text-center text-gray-500">Belum ada testimoni yang tampil.</p>
+        @endif
     </div>
 @endsection
 

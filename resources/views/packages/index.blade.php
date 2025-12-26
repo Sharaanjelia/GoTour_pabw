@@ -21,10 +21,10 @@
 
             <div class="filters">
                 @php $currentDuration = request('duration', 'all'); @endphp
-                <button class="filter-btn {{ $currentDuration === 'all' ? 'active' : '' }}" data-duration="all">Semua Paket</button>
-                <button class="filter-btn {{ $currentDuration === '1 Hari 2 Malam' ? 'active' : '' }}" data-duration="1 Hari 2 Malam">1 Hari 2 Malam</button>
-                <button class="filter-btn {{ $currentDuration === '2 Hari 2 Malam' ? 'active' : '' }}" data-duration="2 Hari 2 Malam">2 Hari 2 Malam</button>
-                <button class="filter-btn {{ $currentDuration === '3 Hari 3 Malam' ? 'active' : '' }}" data-duration="3 Hari 3 Malam">3 Hari 3 Malam</button>
+                <a href="?duration=all{{ request('q') ? '&q='.urlencode(request('q')) : '' }}" class="filter-btn {{ $currentDuration === 'all' ? 'active' : '' }}">Semua Paket</a>
+                <a href="?duration=1+Hari+2+Malam{{ request('q') ? '&q='.urlencode(request('q')) : '' }}" class="filter-btn {{ $currentDuration === '1 Hari 2 Malam' ? 'active' : '' }}">1 Hari 2 Malam</a>
+                <a href="?duration=2+Hari+2+Malam{{ request('q') ? '&q='.urlencode(request('q')) : '' }}" class="filter-btn {{ $currentDuration === '2 Hari 2 Malam' ? 'active' : '' }}">2 Hari 2 Malam</a>
+                <a href="?duration=3+Hari+3+Malam{{ request('q') ? '&q='.urlencode(request('q')) : '' }}" class="filter-btn {{ $currentDuration === '3 Hari 3 Malam' ? 'active' : '' }}">3 Hari 3 Malam</a>
             </div>
 
             <div class="tour-grid" id="tourGrid">
@@ -67,49 +67,4 @@
             <div class="mt-8">{{ $packages->links() }}</div>
         </div>
     </section>
-
-        <script>
-            (function(){
-                const searchInput = document.getElementById('searchInput');
-                const buttons = document.querySelectorAll('.filter-btn');
-
-                function buildUrl(params) {
-                    const url = new URL(window.location.href);
-                    Object.keys(params).forEach(k => {
-                        if (params[k] === null || params[k] === undefined || params[k] === '') {
-                            url.searchParams.delete(k);
-                        } else {
-                            url.searchParams.set(k, params[k]);
-                        }
-                    });
-                    return url.toString();
-                }
-
-                buttons.forEach(b => {
-                    b.addEventListener('click', function(){
-                        const duration = this.getAttribute('data-duration');
-                        const q = (searchInput && searchInput.value) ? searchInput.value.trim() : '';
-                        // Redirect to site root (home) with query params so search results are shown on the home page
-                        const homeUrl = new URL(window.location.origin + '/');
-                        if (q) homeUrl.searchParams.set('q', q);
-                        if (duration && duration !== 'all') homeUrl.searchParams.set('duration', duration);
-                        window.location.href = homeUrl.toString();
-                    });
-                });
-
-                if (searchInput) {
-                    searchInput.addEventListener('keydown', function(e){
-                        if (e.key === 'Enter') {
-                            const duration = '{{ request('duration', 'all') }}';
-                            const q = this.value.trim();
-                            const homeUrl = new URL(window.location.origin + '/');
-                            if (q) homeUrl.searchParams.set('q', q);
-                            if (duration && duration !== 'all') homeUrl.searchParams.set('duration', duration);
-                            window.location.href = homeUrl.toString();
-                        }
-                    });
-                }
-            })();
-        </script>
-<!-- outer wrapper removed to make hero sit closer to navbar -->
 @endsection

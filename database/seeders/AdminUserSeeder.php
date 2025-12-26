@@ -1,5 +1,5 @@
 <?php
-// Seeder diaktifkan. Menambahkan 10 data admin user dummy ke dalam tabel users.
+// Seeder diaktifkan. Menambahkan data admin dan user dummy ke dalam tabel users.
 
 namespace Database\Seeders;
 
@@ -10,11 +10,12 @@ use Illuminate\Support\Facades\DB;
 class AdminUserSeeder extends Seeder
 {
     /**
-     * Menambahkan 10 data admin user dummy ke dalam tabel users.
+     * Menambahkan data admin dan user dummy ke dalam tabel users.
      */
     public function run(): void
     {
-        $admins = [
+        $users = [
+            // Admins
             [
                 'name' => 'Admin Satu',
                 'email' => 'admin1@example.com',
@@ -33,53 +34,60 @@ class AdminUserSeeder extends Seeder
                 'password' => Hash::make('password123'),
                 'is_admin' => true,
             ],
+            // Regular users
             [
-                'name' => 'Admin Empat',
-                'email' => 'admin4@example.com',
+                'name' => 'Raka Pratama',
+                'email' => 'raka.pratama@example.com',
                 'password' => Hash::make('password123'),
-                'is_admin' => true,
+                'is_admin' => false,
             ],
             [
-                'name' => 'Admin Lima',
-                'email' => 'admin5@example.com',
+                'name' => 'Naila Salsabila',
+                'email' => 'naila.salsabila@example.com',
                 'password' => Hash::make('password123'),
-                'is_admin' => true,
+                'is_admin' => false,
             ],
             [
-                'name' => 'Admin Enam',
-                'email' => 'admin6@example.com',
+                'name' => 'Farren Reyhan',
+                'email' => 'farren.reyhan@example.com',
                 'password' => Hash::make('password123'),
-                'is_admin' => true,
+                'is_admin' => false,
             ],
             [
-                'name' => 'Admin Tujuh',
-                'email' => 'admin7@example.com',
+                'name' => 'Kayla Putri',
+                'email' => 'kayla.putri@example.com',
                 'password' => Hash::make('password123'),
-                'is_admin' => true,
+                'is_admin' => false,
             ],
             [
-                'name' => 'Admin Delapan',
-                'email' => 'admin8@example.com',
+                'name' => 'Ryu Santoso',
+                'email' => 'ryu.santoso@example.com',
                 'password' => Hash::make('password123'),
-                'is_admin' => true,
+                'is_admin' => false,
             ],
             [
-                'name' => 'Admin Sembilan',
-                'email' => 'admin9@example.com',
+                'name' => 'Amara Khairunnisa',
+                'email' => 'amara.khairunnisa@example.com',
                 'password' => Hash::make('password123'),
-                'is_admin' => true,
+                'is_admin' => false,
             ],
             [
-                'name' => 'Admin Sepuluh',
-                'email' => 'admin10@example.com',
+                'name' => 'Devian Daffa',
+                'email' => 'devian.daffa@example.com',
                 'password' => Hash::make('password123'),
-                'is_admin' => true,
+                'is_admin' => false,
+            ],
+            [
+                'name' => 'Tia Maharani',
+                'email' => 'tia.maharani@example.com',
+                'password' => Hash::make('password123'),
+                'is_admin' => false,
             ],
         ];
-        foreach ($admins as $admin) {
+        foreach ($users as $user) {
             DB::table('users')->updateOrInsert(
-                ['email' => $admin['email']],
-                $admin
+                ['email' => $user['email']],
+                $user
             );
         }
     }
