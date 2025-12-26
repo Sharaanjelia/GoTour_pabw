@@ -23,6 +23,11 @@
         <label class="form-label" style="margin-top: 1rem;">Deskripsi Lengkap
             <textarea name="description" class="form-input" rows="6" placeholder="Deskripsi detail paket wisata">{{ old('description', $package->description) }}</textarea>
         </label>
+
+        <label class="form-label" style="margin-top: 1rem;">Itinerary (Jadwal Harian)
+            <textarea name="itinerary" class="form-input" rows="5" placeholder="Satu hari per baris, contoh:\nHari 1: Penjemputan, city tour\nHari 2: Wisata alam, pulang">{{ old('itinerary', is_array($package->itinerary) ? implode("\n", $package->itinerary) : $package->itinerary) }}</textarea>
+            <small style="color:#888;">Pisahkan setiap hari dengan baris baru.</small>
+        </label>
         
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
             <label class="form-label">Durasi

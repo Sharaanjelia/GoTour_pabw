@@ -12,6 +12,24 @@ class PackageSeeder extends Seeder
      */
     public function run(): void
     {
-        // Tidak melakukan apa-apa
+        // Contoh data paket dengan itinerary
+        \App\Models\Package::updateOrCreate([
+            'slug' => 'tebing-karaton',
+        ], [
+            'user_id' => 1,
+            'title' => 'Tebing Karaton',
+            'slug' => 'tebing-karaton',
+            'excerpt' => 'Paket wisata Tebing Karaton, Bandung',
+            'description' => 'Nikmati sunrise dan pemandangan hutan dari Tebing Karaton.',
+            'duration' => '2 Hari 2 Malam',
+            'price' => 900000,
+            'cover_image' => 'packages/tebing-karaton.jpg',
+            'featured' => true,
+            'is_active' => true,
+            'itinerary' => [
+                'Hari 1: Penjemputan, city tour, Tebing Karaton sunrise',
+                'Hari 2: Wisata alam, kuliner, pulang',
+            ],
+        ]);
     }
 }

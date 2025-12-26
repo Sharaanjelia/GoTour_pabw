@@ -71,7 +71,10 @@ class ServiceSeeder extends Seeder
             ],
         ];
         foreach ($data as $item) {
-            \App\Models\Service::create($item);
+            \App\Models\Service::updateOrInsert(
+                ['slug' => $item['slug']],
+                $item
+            );
         }
     }
 }

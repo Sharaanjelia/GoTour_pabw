@@ -51,7 +51,13 @@ class PackageController extends Controller
             'cover_image' => 'nullable|image|max:2048',
             'featured' => 'sometimes',
             'is_active' => 'sometimes',
+            'itinerary' => 'nullable|string',
         ]);
+
+        // Parse itinerary textarea to array
+        if (isset($data['itinerary'])) {
+            $data['itinerary'] = array_filter(array_map('trim', preg_split('/\r?\n/', $data['itinerary'])));
+        }
 
         if ($request->hasFile('cover_image')) {
             $file = $request->file('cover_image');
@@ -97,7 +103,13 @@ class PackageController extends Controller
             'cover_image' => 'nullable|image|max:2048',
             'featured' => 'sometimes',
             'is_active' => 'sometimes',
+            'itinerary' => 'nullable|string',
         ]);
+
+        // Parse itinerary textarea to array
+        if (isset($data['itinerary'])) {
+            $data['itinerary'] = array_filter(array_map('trim', preg_split('/\r?\n/', $data['itinerary'])));
+        }
 
         if ($request->hasFile('cover_image')) {
             if ($old = $package->cover_image) {

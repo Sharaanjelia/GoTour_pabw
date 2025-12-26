@@ -6,57 +6,70 @@
 <style>
     .header-layanan {
         text-align: center;
-        margin-top: 48px;
-        margin-bottom: 24px;
+        margin-top: 40px;
+        margin-bottom: 16px;
     }
     .header-layanan-title {
-        font-size: 2.7rem;
+        font-size: 2.5rem;
         font-weight: bold;
-        color: #1a237e;
         margin-bottom: 8px;
+        color: #1a237e;
     }
     .header-layanan-subtitle {
-        font-size: 1.15rem;
+        font-size: 1.1rem;
         color: #555;
     }
     .layanan-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 32px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
         max-width: 1100px;
-        margin: 0 auto 48px auto;
-        padding: 0 16px;
+        margin: 40px auto 0 auto;
+        padding: 0 16px 40px 16px;
     }
     .layanan-card {
         background: #fff;
         border: 1px solid #e0e0e0;
         border-radius: 18px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-        width: 320px;
-        max-width: 100%;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        padding: 18px 18px 14px 18px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 22px 20px 20px 20px;
         transition: box-shadow 0.2s;
     }
     .layanan-card:hover {
-        box-shadow: 0 6px 24px rgba(30,64,175,0.10);
+        box-shadow: 0 4px 16px rgba(30,64,175,0.10);
+    }
+    .layanan-image-wrapper {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 14px;
     }
     .layanan-img {
         width: 100%;
-        max-width: 220px;
-        height: 140px;
+        max-width: 240px;
+        aspect-ratio: 4/3;
         object-fit: cover;
-        border-radius: 12px;
-        margin-bottom: 18px;
+        border-radius: 14px;
+        margin-bottom: 0;
+    }
+    .layanan-placeholder {
+        width: 100%;
+        height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f3f4f6;
+        border-radius: 14px;
     }
     .layanan-title {
-        font-size: 1.25rem;
+        font-size: 1.15rem;
         font-weight: bold;
         color: #1976d2;
-        margin-bottom: 8px;
+        margin-bottom: 4px;
         text-align: center;
     }
     .layanan-desc {
@@ -65,21 +78,9 @@
         text-align: center;
         margin-bottom: 0;
     }
-    .layanan-desc a {
-        color: #1976d2;
-        text-decoration: none;
-        font-weight: 500;
-    }
-    .layanan-desc a:hover {
-        text-decoration: underline;
-    }
     @media (max-width: 900px) {
         .layanan-grid {
-            gap: 20px;
-        }
-        .layanan-card {
-            width: 90%;
-            max-width: 400px;
+            grid-template-columns: repeat(2, 1fr);
         }
     }
     @media (max-width: 600px) {
@@ -87,25 +88,29 @@
             font-size: 2rem;
         }
         .layanan-grid {
-            flex-direction: column;
-            align-items: center;
+            grid-template-columns: 1fr;
             gap: 18px;
-        }
-        .layanan-card {
-            width: 100%;
-            max-width: 100%;
         }
     }
 </style>
+
 <div class="header-layanan">
     <div class="header-layanan-title">Layanan Kami</div>
     <div class="header-layanan-subtitle">Temukan berbagai layanan terbaik kami untuk pengalaman wisata yang tak terlupakan.</div>
 </div>
 @if($services->count())
     <div class="layanan-grid">
-        @foreach($services->take(6) as $service)
+        @foreach($services as $service)
             <div class="layanan-card">
-                <img src="{{ $service->image_url }}" alt="{{ $service->name }}" class="layanan-img">
+                <div class="layanan-image-wrapper">
+                    @if($service->image_url)
+                        <img src="{{ $service->image_url }}" alt="{{ $service->name }}" class="layanan-img">
+                    @else
+                        <div class="layanan-placeholder">
+                            <span style="font-size:3rem;color:#bdbdbd;">&#128100;</span>
+                        </div>
+                    @endif
+                </div>
                 <div class="layanan-title">{{ $service->name }}</div>
                 <div class="layanan-desc">{{ $service->description }}</div>
             </div>
