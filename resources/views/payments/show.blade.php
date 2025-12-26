@@ -115,5 +115,38 @@
             <a href="{{ route('paket.index') }}" class="btn bg-gray-200 text-gray-700 hover:bg-gray-300 px-6 py-2 rounded">Kembali ke Paket</a>
         </div>
     </div>
+
+    {{-- Form Testimoni --}}
+    @auth
+        @if($payment->status === 'paid' && !$payment->testimonial)
+        <div class="bg-blue-50 mt-10 p-6 rounded shadow-sm max-w-2xl mx-auto">
+            <h2 class="text-xl font-bold mb-4">Beri Testimoni</h2>
+            <form action="{{ route('testimoni.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="payment_id" value="{{ $payment->id }}">
+                <div class="mb-4">
+                    <label for="content" class="block font-medium mb-1">Testimoni Anda</label>
+                    <textarea name="content" id="content" rows="4" class="w-full border rounded p-2" required>{{ old('content') }}</textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="rating" class="block font-medium mb-1">Rating</label>
+                    <select name="rating" id="rating" class="w-32 border rounded p-2" required>
+                        <option value="">Pilih rating</option>
+                        @for($i=5; $i>=1; $i--)
+                            <option value="{{ $i }}">{{ $i }} Bintang</option>
+                        @endfor
+                    </select>
+                </div>
+                <button type="submit" class="btn bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Kirim Testimoni</button>
+            </form>
+        </div>
+        @elseif($payment->testimonial)
+        <div class="bg-green-50 mt-10 p-6 rounded shadow-sm max-w-2xl mx-auto">
+            <h2 class="text-xl font-bold mb-4">Testimoni Anda</h2>
+            <div class="mb-2 text-gray-700">"{{ $payment->testimonial->content }}"</div>
+            <div class="text-yellow-500 font-bold">Rating: {{ $payment->testimonial->rating }} / 5</div>
+        </div>
+        @endif
+    @endauth
 </section>
 @endsection

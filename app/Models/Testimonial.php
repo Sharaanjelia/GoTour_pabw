@@ -9,7 +9,11 @@ class Testimonial extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','email','message','photo','approved','user_id'];
+    protected $fillable = ['name','email','message','photo','approved','user_id','payment_id','rating'];
+    public function payment()
+    {
+        return $this->belongsTo(\App\Models\Payment::class, 'payment_id');
+    }
 
     protected $casts = [
         'approved' => 'boolean',

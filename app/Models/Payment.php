@@ -26,4 +26,8 @@ class Payment extends Model
     {
         return $this->belongsTo(Package::class);
     }
+    public function testimonial()
+    {
+        return $this->hasOne(\App\Models\Testimonial::class, 'payment_id');
+    }
 }

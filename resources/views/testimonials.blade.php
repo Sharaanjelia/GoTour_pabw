@@ -23,6 +23,9 @@
                         </div>
                         <div class="testimonial-content">
                             <div class="testimonial-message">{{ $testimonial->message }}</div>
+                            @if(isset($testimonial->rating))
+                                <div class="mb-2 text-yellow-500 font-bold">Rating: {{ $testimonial->rating }} / 5</div>
+                            @endif
                             <div class="testimonial-name">{{ $testimonial->name }}</div>
                         </div>
                     </div>
