@@ -1,5 +1,4 @@
 <?php
-<?php
 // Seeder dinonaktifkan. Data diambil dari SQL dump, tidak perlu insert apapun di sini.
 
 namespace Database\Seeders;
@@ -14,18 +13,5 @@ class AdminUserSeeder extends Seeder
     public function run(): void
     {
         // Tidak melakukan apa-apa
-    }
-}
-            'is_admin' => true,
-        ]);
-
-        // additional admin for testing
-        User::firstOrCreate([
-            'email' => 'admin2@example.com',
-        ], [
-            'name' => 'Admin Two',
-            'password' => bcrypt('password'),
-            'is_admin' => true,
-        ]);
     }
 }

@@ -1,5 +1,4 @@
 <?php
-<?php
 // Seeder dinonaktifkan. Data diambil dari SQL dump, tidak perlu insert apapun di sini.
 
 namespace Database\Seeders;
@@ -15,5 +14,4 @@ class FixNullPasswordsSeeder extends Seeder
     {
         // Tidak melakukan apa-apa
     }
-}
 }

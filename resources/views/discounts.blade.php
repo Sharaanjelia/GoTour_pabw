@@ -82,26 +82,3 @@
     }
 </style>
 @endpush
-
-@section('content')
-<div class="discounts-hero">
-    <h1>Promo & Diskon</h1>
-    <p>Dapatkan penawaran terbaik untuk perjalanan Anda</p>
-</div>
-
-<div class="discounts-container">
-    <div class="discounts-grid">
-        @foreach($items as $it)
-            <div class="discount-card">
-                <div>
-                    <span class="discount-code">{{ $it->code }}</span>
-                    <span class="discount-percent">{{ $it->percent }}% OFF</span>
-                </div>
-                @if($it->description)
-                    <div class="discount-description">{{ $it->description }}</div>
-                @endif
-            </div>
-        @endforeach
-    </div>
-</div>
-@endsection

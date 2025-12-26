@@ -10,7 +10,7 @@ class TestimonialController extends Controller
     public function index()
     {
         $items = Testimonial::where('approved', true)->orderByDesc('created_at')->paginate(12);
-        return view('testimonials.index', compact('items'));
+        return view('testimonials', compact('items'));
     }
 
     public function store(Request $request)
