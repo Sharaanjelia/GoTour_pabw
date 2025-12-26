@@ -29,8 +29,11 @@ class BlogPostController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
+            'category' => 'nullable|string|max:100',
+            'reading_time' => 'nullable|integer|min:1|max:60',
             'excerpt' => 'nullable|string|max:500',
             'content' => 'nullable|string',
+            'external_link' => 'nullable|url|max:500',
             'cover_image' => 'nullable|image|max:2048',
             'is_active' => 'sometimes',
         ]);
@@ -61,8 +64,11 @@ class BlogPostController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
+            'category' => 'nullable|string|max:100',
+            'reading_time' => 'nullable|integer|min:1|max:60',
             'excerpt' => 'nullable|string|max:500',
             'content' => 'nullable|string',
+            'external_link' => 'nullable|url|max:500',
             'cover_image' => 'nullable|image|max:2048',
             'is_active' => 'sometimes',
         ]);

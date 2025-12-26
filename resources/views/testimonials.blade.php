@@ -2,6 +2,7 @@
 
 @section('title','Testimoni')
 
+<<<<<<< HEAD
 @section('content')
     <div class="blog-hero">
         <h1>Testimoni pelanggan</h1>
@@ -37,27 +38,13 @@
     </div>
 @endsection
 
+=======
+>>>>>>> c4b17dfc592e85706dd21f3a5dede2532513366d
 @push('styles')
 <style>
     body {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
-    }
-    .blog-hero {
-        text-align: center;
-        padding: 3rem 1.5rem;
-        background: white;
-        border-bottom: 1px solid #e5e7eb;
-    }
-    .blog-hero h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: #1a1a1a;
-        margin-bottom: 0.5rem;
-    }
-    .blog-hero p {
-        color: #6b7280;
-        font-size: 1.125rem;
     }
     .testimonials-container {
         max-width: 1400px;
@@ -82,7 +69,7 @@
     }
     .testimonials-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 2rem;
         margin-bottom: 4rem;
     }
@@ -92,27 +79,21 @@
         overflow: hidden;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         transition: all 0.4s ease;
-        position: relative;
     }
     .testimonial-card:hover {
-        transform: translateY(-12px) scale(1.02);
+        transform: translateY(-12px);
         box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
     }
     .testimonial-image-wrapper {
         width: 100%;
-        height: 280px;
+        height: 200px;
         overflow: hidden;
-        position: relative;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
     .testimonial-image {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.4s ease;
-    }
-    .testimonial-card:hover .testimonial-image {
-        transform: scale(1.1);
     }
     .testimonial-placeholder {
         width: 100%;
@@ -120,35 +101,79 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        color: rgba(255,255,255,0.7);
+        color: white;
+        font-size: 4rem;
     }
     .testimonial-content {
-        padding: 2rem 1.5rem;
-        text-align: center;
+        padding: 1.5rem;
     }
     .testimonial-message {
         font-size: 0.95rem;
         color: #4a5568;
         line-height: 1.7;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
         font-style: italic;
-        position: relative;
-    }
-    .testimonial-message::before {
-        content: '"';
-        font-size: 3rem;
-        color: #667eea;
-        opacity: 0.3;
-        position: absolute;
-        top: -20px;
-        left: 0;
     }
     .testimonial-name {
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 700;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #667eea;
+    }
+    .testimonial-email {
+        font-size: 0.875rem;
+        color: #9ca3af;
+    }
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: white;
+        border-radius: 16px;
     }
 </style>
 @endpush
+
+@section('content')
+<div class="testimonials-container">
+    <div class="testimonials-hero">
+        <h1 class="testimonials-title">💬 Testimoni Pelanggan</h1>
+        <p class="testimonials-subtitle">Berbagai pengalaman dan review dari pelanggan GoTour</p>
+    </div>
+
+    @if($items->count() > 0)
+        <div class="testimonials-grid">
+            @foreach($items as $item)
+                <div class="testimonial-card">
+                    <div class="testimonial-image-wrapper">
+                        @if($item->photo)
+                            <img src="{{ asset('storage/' . $item->photo) }}" alt="{{ $item->name }}" class="testimonial-image">
+                        @else
+                            <div class="testimonial-placeholder">
+                                👤
+                            </div>
+                        @endif
+                    </div>
+                    <div class="testimonial-content">
+                        <p class="testimonial-message">"{{ $item->message }}"</p>
+                        <div class="testimonial-name">{{ $item->name }}</div>
+                        @if($item->email)
+                            <div class="testimonial-email">{{ $item->email }}</div>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        @if($items->hasPages())
+            <div style="text-align: center;">
+                {{ $items->links() }}
+            </div>
+        @endif
+    @else
+        <div class="empty-state">
+            <div style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.3;">💬</div>
+            <h3 style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-bottom: 0.5rem;">Belum Ada Testimoni</h3>
+            <p style="color: #6b7280;">Testimoni pelanggan akan segera tersedia</p>
+        </div>
+    @endif
+</div>
+@endsection
