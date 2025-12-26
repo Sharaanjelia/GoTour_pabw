@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="footer header">
   <div class="footer-grid">
     <div class="footer-col">
       <h3>GoTour</h3>

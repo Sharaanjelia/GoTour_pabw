@@ -1,14 +1,15 @@
 /* Navbar styles — consolidated so the navbar looks correct across pages */
+
 :root{
-  --primary: #059669; /* brand green */
-  --nav-bg: rgba(0,0,0,0.65);
+  --primary: #063c5e; /* biru navy tua dari screenshot */
+  --nav-bg: #063c5e;
   --text-light: #ffffff;
   --text-dark: #222;
 }
 
 /* header wrapper - provides background and sticky behavior */
 .header {
-  background: linear-gradient(135deg, var(--primary) 0%, #047857 100%);
+  background: #063c5e !important;
   box-shadow: 0 4px 20px rgba(0,0,0,0.12);
   position: sticky;
   top: 0;
