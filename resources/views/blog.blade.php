@@ -10,7 +10,7 @@
     
     /* Hero Section */
     .blog-hero {
-        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        background: linear-gradient(135deg, #0e2238 0%, #1976d2 100%);
         padding: 4rem 1.5rem 3rem;
         text-align: center;
         position: relative;
