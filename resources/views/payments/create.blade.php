@@ -104,7 +104,6 @@
         margin-top: 0.375rem;
     }
 
-    /* Summary Card */
     .summary-card {
         background: white;
         border-radius: 16px;
@@ -339,7 +338,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const participantsInput = document.getElementById('participants');
     const totalAmountInput = document.getElementById('totalAmount');
     
-    // Summary elements
     const summaryPackageName = document.getElementById('summaryPackageName');
     const summaryPackagePrice = document.getElementById('summaryPackagePrice');
     const pricePerPerson = document.getElementById('pricePerPerson');
@@ -353,7 +351,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const participants = parseInt(participantsInput.value) || 1;
         const total = price * participants;
 
-        // Update summary
         summaryPackageName.textContent = title;
         summaryPackagePrice.textContent = price > 0 ? '— Rp ' + formatNumber(price) : '';
         pricePerPerson.textContent = 'Rp ' + formatNumber(price);
@@ -369,7 +366,6 @@ document.addEventListener('DOMContentLoaded', function() {
     packageSelect.addEventListener('change', updateSummary);
     participantsInput.addEventListener('input', updateSummary);
 
-    // Initial update
     updateSummary();
 });
 </script>

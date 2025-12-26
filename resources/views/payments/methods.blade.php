@@ -480,10 +480,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('paymentForm');
     const submitBtn = document.getElementById('submitBtn');
 
-    // Handle card clicks
     cards.forEach(card => {
         card.addEventListener('click', function(e) {
-            // Don't trigger if clicking on a sub-option radio
             if (e.target.classList.contains('suboption-radio')) {
                 return;
             }
@@ -496,7 +494,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Handle method radio changes
     methodRadios.forEach(radio => {
         radio.addEventListener('change', updateSelection);
     });
@@ -508,14 +505,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 card.classList.add('selected');
             } else {
                 card.classList.remove('selected');
-                // Clear sub-options when deselected
                 const subRadios = card.querySelectorAll('.suboption-radio');
                 subRadios.forEach(sr => sr.checked = false);
             }
         });
     }
 
-    // Form validation
     form.addEventListener('submit', function(e) {
         const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
         
@@ -526,8 +521,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const methodValue = selectedMethod.value;
-        
-        // Check if sub-option is required and selected
+
         if (methodValue === 'bank_transfer') {
             const selectedBank = document.querySelector('input[name="bank_provider"]:checked');
             if (!selectedBank) {
@@ -552,7 +546,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Initial selection if any
     updateSelection();
 });
 </script>
