@@ -14,15 +14,15 @@ class UpdateBlogImagesSeeder extends Seeder
     {
         // Update cover images untuk setiap artikel
         $updates = [
-            'glamping-seru-di-bandung-rekomendasi-untuk-liburan-keluarga' => 'images/blog/Glamping Seru di Bandung Rekomendasi untuk Liburannn.webp',
-            'menjelajahi-kesejukan-kebun-teh-rancabali-di-ciwidey' => 'images/blog/Kebun Teh Rancabali di Ciwidey.jpg',
-            '5-rekomendasi-tempat-makan-sunda-autentik-di-lembang' => 'images/blog/Tempat Makan Sunda Autentik di Lembang.webp',
-            'wisata-sejarah-menelusuri-gedung-bersejarah-di-bandung' => 'images/blog/Wisata Sejarah Menelusuri Gedung Bersejarah di Bandung.jpg',
-            'kopi-bandung-7-coffee-shop-dengan-view-terbaik' => 'images/blog/Kopi Bandung 7 Coffee Shop dengan View Terbaik.webp',
-            'panduan-lengkap-berkunjung-ke-kawah-putih-ciwidey' => 'images/blog/Panduan Lengkap Berkunjung ke Kawah Putih Ciwidey.jpg',
-            'tempat-nongkrong-hits-di-bandung-untuk-anak-muda' => 'images/blog/Tempat Nongkrong Hits di Bandung untuk Anak Muda.jpg',
-            'belanja-di-bandung-factory-outlet-dan-distro-terbaik' => 'images/blog/Belanja di Bandung Factory Outlet dan Distro Terbaik.webp',
-            'jalan-jalan-malam-di-bandung-tempat-wisata-malam-terbaik' => 'images/blog/Jalan-Jalan Malam di Bandung Tempat Wisata Malam Terbaik.jpg',
+            'glamping-seru-di-bandung-rekomendasi-untuk-liburan-keluarga' => 'storage/blog/Glamping Seru di Bandung Rekomendasi untuk Liburannn.jpeg',
+            'menjelajahi-kesejukan-kebun-teh-rancabali-di-ciwidey' => 'storage/blog/Kebun Teh Rancabali di Ciwidey.jpeg',
+            '5-rekomendasi-tempat-makan-sunda-autentik-di-lembang' => 'storage/blog/Tempat Makan Sunda Autentik di Lembang.jpeg',
+            'wisata-sejarah-menelusuri-gedung-bersejarah-di-bandung' => 'storage/blog/Wisata Sejarah Menelusuri Gedung Bersejarah di Bandung.jpeg',
+            'kopi-bandung-7-coffee-shop-dengan-view-terbaik' => 'storage/blog/Kopi Bandung 7 Coffee Shop dengan View Terbaik.jpeg',
+            'panduan-lengkap-berkunjung-ke-kawah-putih-ciwidey' => 'storage/blog/Panduan Lengkap Berkunjung ke Kawah Putih Ciwidey.jpeg',
+            'tempat-nongkrong-hits-di-bandung-untuk-anak-muda' => 'storage/blog/Tempat Nongkrong Hits di Bandung untuk Anak Muda.jpeg',
+            'belanja-di-bandung-factory-outlet-dan-distro-terbaik' => 'storage/blog/Belanja di Bandung Factory Outlet dan Distro Terbaik.jpeg',
+            'jalan-jalan-malam-di-bandung-tempat-wisata-malam-terbaik' => 'storage/blog/Jalan-Jalan Malam di Bandung Tempat Wisata Malam Terbaik.jpeg',
         ];
 
         foreach ($updates as $slug => $imagePath) {

@@ -34,8 +34,8 @@
                     @foreach($posts as $p)
                         <tr>
                             <td>
-                                @if($p->cover_image && file_exists(public_path($p->cover_image)))
-                                    <img src="{{ asset($p->cover_image) }}" alt="{{ $p->title }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                @if($p->cover_image)
+                                    <img src="{{ asset('storage/blog/'.basename($p->cover_image)) }}" alt="{{ $p->title }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                 @else
                                     <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: bold;">No Img</div>
                                 @endif

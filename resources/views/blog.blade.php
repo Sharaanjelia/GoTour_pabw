@@ -10,7 +10,7 @@
     
     /* Hero Section */
     .blog-hero {
-        background: linear-gradient(135deg, #0e2238 0%, #1976d2 100%);
+        background: linear-gradient(135deg, #0e2238 0%, #0e2238 100%);
         padding: 4rem 1.5rem 3rem;
         text-align: center;
         position: relative;
@@ -32,7 +32,7 @@
         align-items: center;
         gap: 0.5rem;
         background: rgba(59, 130, 246, 0.1);
-        color: #2563eb;
+        color: #0e2238;
         padding: 0.5rem 1.25rem;
         border-radius: 999px;
         font-size: 0.875rem;
@@ -62,13 +62,13 @@
         -webkit-text-fill-color: transparent;
         background-clip: text;
     }
-    .blog-hero p {
-        color: #475569;
-        font-size: 1.125rem;
-        max-width: 800px;
-        margin: 0 auto;
-        line-height: 1.7;
+    .blog-hero {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        padding: 4rem 1.5rem 3rem;
+        text-align: center;
         position: relative;
+        overflow: hidden;
+    }
         z-index: 1;
     }
 
@@ -412,8 +412,6 @@
 <!-- Blog Section -->
 <section class="blog-section">
     <div class="blog-section-header">
-        <h2 class="blog-section-title">Inspirasi Liburan Terbaru</h2>
-        <p class="blog-section-subtitle">Kumpulan tips dan cerita perjalanan terbaik khusus di wilayah Bandung.</p>
     </div>
 
     @if($posts->count() > 0)
@@ -421,8 +419,8 @@
             @foreach($posts as $post)
                 <article class="blog-card">
                     <div class="blog-card-image-wrapper">
-                        @if($post->cover_image && file_exists(public_path($post->cover_image)))
-                            <img src="{{ asset($post->cover_image) }}" alt="{{ $post->title }}" class="blog-card-image">
+                        @if($post->cover_image)
+                            <img src="{{ asset('storage/blog/'.basename($post->cover_image)) }}" alt="{{ $post->title }}" class="blog-card-image">
                         @else
                             <img src="https://via.placeholder.com/600x360/3b82f6/ffffff?text={{ urlencode($post->category ?? 'Blog') }}" alt="{{ $post->title }}" class="blog-card-image">
                         @endif
