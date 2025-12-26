@@ -22,7 +22,9 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th style="width: 80px;">Gambar</th>
                         <th>Judul</th>
+                        <th>Kategori</th>
                         <th>Tanggal Publish</th>
                         <th>Status</th>
                         <th style="text-align: center;">Aksi</th>
@@ -31,7 +33,21 @@
                 <tbody>
                     @foreach($posts as $p)
                         <tr>
+                            <td>
+                                @if($p->cover_image && file_exists(public_path($p->cover_image)))
+                                    <img src="{{ asset($p->cover_image) }}" alt="{{ $p->title }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                @else
+                                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: bold;">No Img</div>
+                                @endif
+                            </td>
                             <td style="font-weight: 600;">{{ $p->title }}</td>
+                            <td>
+                                @if($p->category)
+                                    <span style="background: #dbeafe; color: #1e40af; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">{{ $p->category }}</span>
+                                @else
+                                    <span style="color: #9ca3af;">-</span>
+                                @endif
+                            </td>
                             <td>{{ optional($p->published_at)->format('d M Y') ?? '-' }}</td>
                             <td>
                                 @if($p->is_active)

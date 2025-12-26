@@ -30,6 +30,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // Other public pages mapped from legacy PHP
 Route::get('/blog', [\App\Http\Controllers\BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{blog:slug}', [\App\Http\Controllers\BlogController::class, 'show'])->name('blog.show');
 Route::get('/layanan', [\App\Http\Controllers\ServiceController::class, 'index'])->name('layanan.index');
 Route::get('/discounts', [\App\Http\Controllers\DiscountController::class, 'index'])->name('discounts.index');
 Route::get('/foto', [\App\Http\Controllers\PhotoController::class, 'index'])->name('foto.index');

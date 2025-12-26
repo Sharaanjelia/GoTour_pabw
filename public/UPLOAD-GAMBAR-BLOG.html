@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Upload Gambar Blog</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+        .alert {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .alert-title {
+            font-weight: bold;
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+        .alert-text {
+            color: #78350f;
+            line-height: 1.6;
+        }
+        .step {
+            background: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border: 2px solid #e5e7eb;
+        }
+        .step-number {
+            background: #3b82f6;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        .step-title {
+            color: #1f2937;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .mapping {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .mapping-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        .mapping-item:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+        }
+        .mapping-image {
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .mapping-arrow {
+            color: #3b82f6;
+            font-size: 1.25rem;
+            margin: 0.5rem 0;
+        }
+        .mapping-filename {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            word-break: break-all;
+        }
+        .mapping-article {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        .code {
+            background: #1f2937;
+            color: #10b981;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        .success {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        .success-title {
+            font-weight: bold;
+            color: #065f46;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📸 Panduan Upload Gambar Blog GoTour</h1>
+        <p class="subtitle">Ikuti langkah-langkah berikut untuk menampilkan gambar di halaman blog</p>
+
+        <div class="alert">
+            <div class="alert-title">⚠️ PENTING!</div>
+            <div class="alert-text">
+                Saat ini gambar blog belum muncul karena file gambar belum ada di folder <strong>public/images/blog/</strong>
+                <br>Silakan ikuti langkah-langkah di bawah ini.
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">1</span>
+                Siapkan 9 Gambar Blog
+            </div>
+            <p style="color: #6b7280; margin-bottom: 1rem;">
+                Anda sudah punya 9 gambar yang dikirimkan. Simpan dulu semua gambar di satu folder.
+            </p>
+        </div>
+
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">2</span>
+                Rename Gambar Sesuai Mapping
+            </div>
+            <p style="color: #6b7280; margin-bottom: 1rem;">
+                Ubah nama setiap gambar sesuai dengan artikel blog-nya:
+            </p>
+            <div class="mapping">
+                <div class="mapping-item">
+                    <div class="mapping-image">🏕️ Gambar Glamping (Dome Putih)</div>
+                    <div class="mapping-arrow">↓</div>
+                    <div class="mapping-filename">glamping-bandung.jpg</div>
+                    <div class="mapping-article">→ Glamping Seru di Bandung</div>
+                </div>
+
+                <div class="mapping-item">
+                    <div class="mapping-image">🌿 Gambar Kebun Teh (Jembatan Kayu)</div>
+                    <div class="mapping-arrow">↓</div>
+                    <div class="mapping-filename">kebun-teh-rancabali.jpg</div>
+                    <div class="mapping-article">→ Menjelajahi Kesejukan Kebun Teh Rancabali</div>
+                </div>
+
+                <div class="mapping-item">
+                    <div class="mapping-image">🍽️ Gambar Makanan Sunda</div>
+                    <div class="mapping-arrow">↓</div>
+                    <div class="mapping-filename">kuliner-sunda-lembang.jpg</div>
+                    <div class="mapping-article">→ 5 Rekomendasi Tempat Makan Sunda</div>
+                </div>
+
+                <div class="mapping-item">
+                    <div class="mapping-image">🏛️ Gambar Gedung Sate</div>
+                    <div class="mapping-arrow">↓</div>
+                    <div class="mapping-filename">gedung-sate-bandung.jpg</div>
+                    <div class="mapping-article">→ Wisata Sejarah Gedung Bersejarah</div>
+                </div>
+
+                <div class="mapping-item">
+                    <div class="mapping-image">☕ Gambar Coffee Shop (Putih Modern)</div>
+                    <div class="mapping-arrow">↓</div>
+                    <div class="mapping-filename">coffee-shop-bandung.jpg</div>
+                    <div class="mapping-article">→ 7 Coffee Shop dengan View Terbaik</div>
+                </div>
+
+                <div class="mapping-item">
+                    <div class="mapping-image">🌋 Gambar Kawah Putih (Danau Biru)</div>
+                    <div class="mapping-arrow">↓</div>
+                    <div class="mapping-filename">kawah-putih-ciwidey.jpg</div>
+                    <div class="mapping-article">→ Panduan Lengkap Berkunjung ke Kawah Putih</div>
+                </div>
+
+                <div class="mapping-item">
+                    <div class="mapping-image">🌃 Gambar Cafe View Kota Malam</div>
+                    <div class="mapping-arrow">↓</div>
+                    <div class="mapping-filename">cafe-view-kota-bandung.jpg</div>
+                    <div class="mapping-article">→ Tempat Nongkrong Hits untuk Anak Muda</div>
+                </div>
+
+                <div class="mapping-item">
+                    <div class="mapping-image">🛍️ Gambar Heritage Outlet</div>
+                    <div class="mapping-arrow">↓</div>
+                    <div class="mapping-filename">heritage-factory-outlet.jpg</div>
+                    <div class="mapping-article">→ Belanja Factory Outlet dan Distro</div>
+                </div>
+
+                <div class="mapping-item">
+                    <div class="mapping-image">🌙 Gambar Wisata Malam (Outdoor)</div>
+                    <div class="mapping-arrow">↓</div>
+                    <div class="mapping-filename">wisata-malam-bandung.jpg</div>
+                    <div class="mapping-article">→ Jalan-Jalan Malam di Bandung</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">3</span>
+                Copy Gambar ke Folder Project
+            </div>
+            <p style="color: #6b7280; margin-bottom: 1rem;">
+                Setelah semua gambar di-rename, copy ke folder:
+            </p>
+            <div class="code">
+                C:\Users\User\GoTour_pabw\public\images\blog\
+            </div>
+            <p style="color: #6b7280; margin-top: 1rem;">
+                Pastikan foldernya ada. Jika belum, buat folder <strong>blog</strong> di dalam <strong>public/images/</strong>
+            </p>
+        </div>
+
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">4</span>
+                Jalankan Command Update Database
+            </div>
+            <p style="color: #6b7280; margin-bottom: 1rem;">
+                Buka PowerShell/Terminal di folder project, lalu jalankan:
+            </p>
+            <div class="code">
+                php artisan db:seed --class=UpdateBlogImagesSeeder
+            </div>
+            <p style="color: #6b7280; margin-top: 1rem;">
+                Command ini akan mengupdate path gambar di database untuk setiap artikel.
+            </p>
+        </div>
+
+        <div class="step">
+            <div class="step-title">
+                <span class="step-number">5</span>
+                Refresh Halaman Blog
+            </div>
+            <p style="color: #6b7280;">
+                Buka browser dan akses <strong>http://127.0.0.1:8000/blog</strong>
+                <br>Semua gambar sekarang akan muncul dengan sempurna! 🎉
+            </p>
+        </div>
+
+        <div class="success">
+            <div class="success-title">✅ Checklist Sebelum Lanjut:</div>
+            <ul style="color: #065f46; line-height: 2; margin-left: 1.5rem;">
+                <li>✓ 9 gambar sudah di-rename sesuai mapping</li>
+                <li>✓ Semua gambar sudah di-copy ke <code>public/images/blog/</code></li>
+                <li>✓ Command seeder sudah dijalankan</li>
+                <li>✓ Halaman blog sudah di-refresh</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

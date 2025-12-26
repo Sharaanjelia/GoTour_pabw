@@ -14,4 +14,12 @@ class BlogController extends Controller
         $posts = $q->paginate(12)->withQueryString();
         return view('blog.index', compact('posts'));
     }
+
+    public function show(BlogPost $blog)
+    {
+        if (!$blog->is_active) {
+            abort(404);
+        }
+        return view('blog.show', compact('blog'));
+    }
 }

@@ -17,12 +17,27 @@
             <input name="title" value="{{ old('title', $post->title) }}" placeholder="Judul artikel" class="form-input" required>
         </label>
         
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-top: 1rem;">
+            <label class="form-label">Kategori
+                <input name="category" placeholder="WISATA ALAM, KULINER BANDUNG, dll" class="form-input" value="{{ old('category', $post->category) }}">
+            </label>
+            
+            <label class="form-label">Waktu Baca (menit)
+                <input name="reading_time" type="number" placeholder="5" class="form-input" min="1" max="60" value="{{ old('reading_time', $post->reading_time ?? 5) }}">
+            </label>
+        </div>
+        
         <label class="form-label" style="margin-top: 1rem;">Ringkasan
             <textarea name="excerpt" placeholder="Ringkasan singkat artikel" class="form-input" rows="2">{{ old('excerpt', $post->excerpt) }}</textarea>
         </label>
         
-        <label class="form-label" style="margin-top: 1rem;">Konten *
-            <textarea name="content" placeholder="Isi artikel lengkap" class="form-input" rows="8" required>{{ old('content', $post->content) }}</textarea>
+        <label class="form-label" style="margin-top: 1rem;">Konten
+            <textarea name="content" placeholder="Isi artikel lengkap" class="form-input" rows="8">{{ old('content', $post->content) }}</textarea>
+        </label>
+        
+        <label class="form-label" style="margin-top: 1rem;">Link Eksternal (Google/Artikel Lain)
+            <input name="external_link" type="url" placeholder="https://www.google.com/search?q=..." class="form-input" value="{{ old('external_link', $post->external_link) }}">
+            <small style="color: #6b7280; font-size: 0.875rem;">Jika diisi, tombol "Baca Selengkapnya" akan mengarah ke link ini</small>
         </label>
         
         <label class="form-label" style="margin-top: 1rem;">Gambar Cover
