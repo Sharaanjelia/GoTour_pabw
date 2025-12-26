@@ -1,14 +1,18 @@
 <?php
+<?php
+// Seeder dinonaktifkan. Data diambil dari SQL dump, tidak perlu insert apapun di sini.
 
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Destination;
 
 class DestinationSeeder extends Seeder
 {
+    /**
+     * Seeder dinonaktifkan, gunakan SQL dump untuk data.
+     */
     public function run(): void
     {
-        Destination::factory()->count(12)->create();
+        // Tidak melakukan apa-apa
     }
 }

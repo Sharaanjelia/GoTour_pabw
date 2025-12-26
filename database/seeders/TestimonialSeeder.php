@@ -1,14 +1,18 @@
 <?php
+<?php
+// Seeder dinonaktifkan. Data diambil dari SQL dump, tidak perlu insert apapun di sini.
 
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Testimonial;
 
 class TestimonialSeeder extends Seeder
 {
+    /**
+     * Seeder dinonaktifkan, gunakan SQL dump untuk data.
+     */
     public function run(): void
     {
-        Testimonial::factory()->count(10)->create();
+        // Tidak melakukan apa-apa
     }
 }

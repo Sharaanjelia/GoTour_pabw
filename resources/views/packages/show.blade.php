@@ -178,7 +178,93 @@
                     </div>
                 </div>
                 
-                <div class="package-description">{{ $package->description }}</div>
+                <div class="package-description">{{ Str::of($package->description)->before('Fasilitas') }}</div>
+
+                @php
+                    $fasilitas = null;
+                    if (Str::contains($package->description, 'Fasilitas')) {
+                        $fasilitas = trim(Str::of($package->description)->after('Fasilitas'));
+                    }
+                @endphp
+
+                @if($fasilitas)
+                <div class="itinerary-section" style="margin-top:2.5rem;">
+                    <h2 style="font-size:1.15rem;font-weight:700;color:#0ea5a2;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 22px; height: 22px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                        Fasilitas
+                    </h2>
+                    <div style="background:#f0fdfa;border-radius:12px;padding:1.2rem 1.5rem 1.2rem 1.5rem;box-shadow:0 2px 8px rgba(14,165,162,0.08);margin-bottom:2rem;">
+                        <ul style="list-style:disc inside;line-height:2;font-size:1.05rem;color:#166a6a;">
+                        @foreach(preg_split('/\r?\n/', $fasilitas) as $item)
+                            @if(trim($item))
+                                <li>{{ trim($item) }}</li>
+                            @endif
+                        @endforeach
+                        </ul>
+                    </div>
+                </div>
+                @endif
+
+                @if(is_array($package->itinerary) && count($package->itinerary))
+                <div class="rundown-section" style="margin-top:0.5rem;">
+                    <h2 style="font-size:1.15rem;font-weight:700;color:#0ea5a2;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 22px; height: 22px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+                        Rundown / Jadwal Harian
+                    </h2>
+                    <div class="timeline">
+                        @foreach($package->itinerary as $i => $item)
+                            @if(trim($item))
+                            <div class="timeline-item" style="animation-delay: {{ 0.1 * $i }}s;">
+                                <div class="timeline-dot">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="#0ea5a2" viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="10" fill="#f0fdfa"/><text x="12" y="16" text-anchor="middle" font-size="12" fill="#0ea5a2" font-weight="bold">{{ $i+1 }}</text></svg>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Hari {{ $i+1 }}</div>
+                                    <div class="timeline-desc">{{ $item }}</div>
+                                </div>
+                            </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+                <style>
+                .timeline {
+                    position: relative;
+                    margin-left: 1.5rem;
+                    padding-left: 1.5rem;
+                    border-left: 3px solid #0ea5a2;
+                }
+                .timeline-item {
+                    display: flex;
+                    align-items: flex-start;
+                    margin-bottom: 2rem;
+                    opacity: 0;
+                    transform: translateY(20px);
+                    animation: fadeInUp 0.5s forwards;
+                }
+                .timeline-dot {
+                    margin-left: -2.1rem;
+                    margin-right: 1rem;
+                    flex-shrink: 0;
+                }
+                .timeline-title {
+                    font-weight: 700;
+                    color: #0ea5a2;
+                    font-size: 1.08rem;
+                    margin-bottom: 0.2rem;
+                }
+                .timeline-desc {
+                    color: #166a6a;
+                    font-size: 1.01rem;
+                }
+                @keyframes fadeInUp {
+                    to {
+                        opacity: 1;
+                        transform: none;
+                    }
+                }
+                </style>
+                @endif
             </div>
         </div>
 

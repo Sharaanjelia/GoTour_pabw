@@ -11,6 +11,7 @@ class Package extends Model
 {
     use HasFactory;
 
+
     protected $fillable = [
         'user_id',
         'title',
@@ -22,11 +23,13 @@ class Package extends Model
         'cover_image',
         'featured',
         'is_active',
+        'itinerary',
     ];
 
     protected $casts = [
         'featured' => 'boolean',
         'is_active' => 'boolean',
+        'itinerary' => 'array',
     ];
 
     protected $appends = ['cover_image_url'];

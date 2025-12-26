@@ -1,12 +1,11 @@
 <?php
-<?php
 // Seeder dinonaktifkan. Data diambil dari SQL dump, tidak perlu insert apapun di sini.
 
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class FixNullPasswordsSeeder extends Seeder
+class RealPackageSeeder extends Seeder
 {
     /**
      * Seeder dinonaktifkan, gunakan SQL dump untuk data.
@@ -15,5 +14,4 @@ class FixNullPasswordsSeeder extends Seeder
     {
         // Tidak melakukan apa-apa
     }
-}
 }

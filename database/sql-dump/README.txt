@@ -1,0 +1,2 @@
+-- Paste your SQL dump here or copy gotour_proyek.sql to this folder.
+-- Example: gotour_proyek.sql
