@@ -515,10 +515,8 @@
 
 @push('scripts')
 <script>
-// Auto scroll to top on load
 window.scrollTo(0, 0);
 
-// Print styles
 const style = document.createElement('style');
 style.textContent = `
     @media print {
