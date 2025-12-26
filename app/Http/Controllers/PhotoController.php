@@ -9,6 +9,6 @@ class PhotoController extends Controller
     public function index()
     {
         $items = PhotoRecommendation::where('is_active', true)->orderByDesc('created_at')->paginate(12);
-        return view('photos.index', compact('items'));
+        return view('photos', compact('items'));
     }
 }

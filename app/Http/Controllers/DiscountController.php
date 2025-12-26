@@ -16,6 +16,6 @@ class DiscountController extends Controller
             $q->whereNull('ends_at')->orWhere('ends_at','>=',$now);
         })->orderByDesc('created_at')->get();
 
-        return view('discounts.index', compact('items'));
+        return view('discounts', compact('items'));
     }
 }

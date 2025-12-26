@@ -12,7 +12,7 @@ class BlogController extends Controller
         $q = BlogPost::where('is_active', true)->orderByDesc('published_at');
         if ($s = $request->input('q')) $q->where('title','like',"%$s%");
         $posts = $q->paginate(12)->withQueryString();
-        return view('blog.index', compact('posts'));
+        return view('blog', compact('posts'));
     }
 
     public function show(BlogPost $blog)
