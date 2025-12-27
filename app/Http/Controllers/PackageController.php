@@ -37,6 +37,10 @@ class PackageController extends Controller
         if (!$package->is_active) {
             abort(404);
         }
-        return view('packages.show', compact('package'));
+        // Ambil testimoni yang sudah di-approve dan terkait dengan paket ini
+        $testimonials = \App\Models\Testimonial::whereHas('payment', function($q) use ($package) {
+            $q->where('package_id', $package->id);
+        })->where('approved', true)->latest()->take(5)->get();
+        return view('packages.show', compact('package', 'testimonials'));
     }
 }

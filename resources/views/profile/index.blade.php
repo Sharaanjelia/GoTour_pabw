@@ -518,12 +518,8 @@
             </div>
 
             <div class="profile-stats">
-                <div class="profile-stat">
-                    <span class="profile-stat-value">{{ number_format($user->poin) }}</span>
-                    <span class="profile-stat-label">Poin</span>
-                </div>
-                <div class="profile-stat">
-                    <span class="profile-stat-value">{{ $user->trips_count }}</span>
+                <div class="profile-stat" style="width:100%;">
+                    <span class="profile-stat-value">{{ $trips->count() }}</span>
                     <span class="profile-stat-label">Trip</span>
                 </div>
             </div>
@@ -875,7 +871,7 @@
                     <div class="profile-card" style="padding: 0; overflow: hidden;" data-favorite-id="{{ $fav->id }}">
                         <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #0c1e3d 0%, #1a365d 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem; position: relative; overflow: hidden;">
                             <img src="{{ $fav->package->cover_image_url ?? asset('images/download.jpeg') }}" alt="{{ $fav->package->title }}" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.onerror=null;this.src='{{ asset('images/download.jpeg') }}';">
-                            <button style="position: absolute; top: 1rem; right: 1rem; background: white; border: none; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                            <button class="btn-remove-favorite" style="position: absolute; top: 1rem; right: 1rem; background: white; border: none; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#dc2626" style="width: 24px; height: 24px;">
                                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                                 </svg>
@@ -1116,33 +1112,29 @@
         });
 
         // AJAX Remove Favorite (Profile > Favorit Wisata)
-        document.querySelectorAll('#tab-favorit .profile-card button').forEach(btn => {
+        document.querySelectorAll('.btn-remove-favorite').forEach(btn => {
             btn.addEventListener('click', function(e) {
-                // Only target the heart button (remove favorite)
-                if (btn.querySelector('svg path[d*="21.35"]')) {
-                    e.preventDefault();
-                    const card = btn.closest('.profile-card');
-                    // Find favorite id from blade (data-favorite-id)
-                    const favId = card && card.dataset.favoriteId;
-                    if (!favId) return;
-                    if (!window.confirm('Hapus dari daftar favorit?')) return;
-                    fetch('/favorite/' + favId, {
-                        method: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                            'Accept': 'application/json',
-                        },
-                    })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.success) {
-                            card.remove();
-                        } else {
-                            alert('Gagal menghapus favorit.');
-                        }
-                    })
-                    .catch(() => alert('Gagal menghapus favorit.'));
-                }
+                e.preventDefault();
+                const card = btn.closest('.profile-card');
+                const favId = card && card.dataset.favoriteId;
+                if (!favId) return;
+                if (!window.confirm('Hapus dari daftar favorit?')) return;
+                fetch('/favorite/' + favId, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json',
+                    },
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        card.remove();
+                    } else {
+                        alert('Gagal menghapus favorit.');
+                    }
+                })
+                .catch(() => alert('Gagal menghapus favorit.'));
             });
         });
     </script>

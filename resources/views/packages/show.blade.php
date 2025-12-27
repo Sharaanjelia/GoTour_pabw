@@ -311,6 +311,34 @@
         </svg>
         Kembali ke semua paket
     </a>
+
+    {{-- Testimoni Paket --}}
+    <div style="margin-top:3rem;">
+        <h2 style="font-size:1.25rem;font-weight:700;color:#0ea5a2;margin-bottom:1.2rem;">Testimoni Peserta Trip Ini</h2>
+        @if($testimonials->count())
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem;">
+                @foreach($testimonials as $testimonial)
+                    <div style="background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);padding:1.5rem;display:flex;gap:1.2rem;align-items:flex-start;">
+                        <img src="{{ $testimonial->photo_url ?? asset('images/user.png') }}" alt="Foto {{ $testimonial->name }}" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex-shrink:0;">
+                        <div>
+                            <div style="font-weight:600;color:#0ea5a2;font-size:1.08rem;">{{ $testimonial->name }}</div>
+                            @if($testimonial->rating)
+                                <div style="color:#f59e0b;font-size:1.1rem;margin-bottom:0.2rem;">
+                                    @for($i=1;$i<=5;$i++)
+                                        <span style="color:{{ $i <= $testimonial->rating ? '#f59e0b' : '#e5e7eb' }};">&#9733;</span>
+                                    @endfor
+                                </div>
+                            @endif
+                            <div style="color:#374151;font-size:1rem;line-height:1.6;margin-bottom:0.2rem;">{{ $testimonial->message }}</div>
+                            <div style="color:#6b7280;font-size:0.92rem;">{{ $testimonial->created_at->format('d M Y') }}</div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div style="color:#6b7280;font-size:1.05rem;">Belum ada testimoni untuk paket ini.</div>
+        @endif
+    </div>
 </div>
 @endsection
 
