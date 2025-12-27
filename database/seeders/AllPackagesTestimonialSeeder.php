@@ -21,7 +21,7 @@ class AllPackagesTestimonialSeeder extends Seeder
             'foto cowok.jpg',
             'foto pemandu wisata.png',
         ];
-        $users = \App\Models\User::where('is_admin', false)->get();
+        $users = \App\Models\User::where('is_admin', false)->inRandomOrder()->get();
         $userCount = $users->count();
         $imageCount = count($imageFiles);
         foreach (\App\Models\Package::all() as $package) {
@@ -30,8 +30,10 @@ class AllPackagesTestimonialSeeder extends Seeder
                 'Fasilitas di ' . $package->title . ' lengkap dan perjalanan lancar.',
                 'Saya sangat merekomendasikan paket ' . $package->title . ' untuk liburan keluarga!',
             ];
-            for ($idx = 0; $idx < 3; $idx++) {
-                $user = $users[($package->id + $idx) % $userCount];
+            // Ambil 3 user random unik untuk setiap paket
+            $userSample = $users->shuffle()->take(3);
+            $idx = 0;
+            foreach ($userSample as $user) {
                 $payment = \App\Models\Payment::create([
                     'user_id' => $user->id,
                     'package_id' => $package->id,
@@ -57,6 +59,7 @@ class AllPackagesTestimonialSeeder extends Seeder
                     'rating' => rand(4,5),
                     'photo' => 'images/' . $imageFiles[($package->id + $idx) % $imageCount],
                 ]);
+                $idx++;
             }
         }
     }
