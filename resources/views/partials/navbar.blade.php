@@ -49,7 +49,7 @@
             @if(auth()->user()->is_admin)
               <a href="{{ route('admin.dashboard') }}" class="btn btn-ghost">Admin</a>
             @endif
-            <span class="user-name">{{ auth()->user()->name }}</span>
+            <a href="{{ route('user.profile') }}" class="user-name" style="text-decoration: none; color: white; cursor: pointer; font-weight: 600;">{{ auth()->user()->name }}</a>
             <form method="POST" action="{{ route('logout') }}" style="display:inline">
               @csrf
               <button type="submit" class="logout-btn">Logout</button>
@@ -87,7 +87,7 @@
             @if(auth()->user()->is_admin)
               <a href="{{ route('admin.dashboard') }}" class="btn btn-ghost">Admin</a>
             @endif
-            <span class="user-name">{{ auth()->user()->name }}</span>
+            <a href="{{ route('user.profile') }}" class="user-name" style="text-decoration: none; color: white; cursor: pointer; font-weight: 600;">{{ auth()->user()->name }}</a>
             <form method="POST" action="{{ route('logout') }}" style="display:inline">
               @csrf
               <button type="submit" class="logout-btn">Logout</button>

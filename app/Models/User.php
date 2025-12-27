@@ -22,6 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
+        'phone',
+        'city',
     ];
 
     /**
@@ -46,5 +48,15 @@ class User extends Authenticatable
             'password' => 'hashed',
             'is_admin' => 'boolean',
         ];
+    }
+
+    public function getPoinAttribute()
+    {
+        return 2450;
+    }
+
+    public function getTripsCountAttribute()
+    {
+        return 12;
     }
 }
