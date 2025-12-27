@@ -11,7 +11,31 @@ class UserProfileController extends Controller
     public function index()
     {
         $user = auth()->user();
-        return view('profile.index', compact('user'));
+
+        // E-Tiket: pembayaran sukses
+        $tickets = $user->payments()
+            ->where('status', 'paid')
+            ->with('package')
+            ->orderByDesc('created_at')
+            ->get();
+
+        // Riwayat Trip: pembayaran selesai
+        $trips = $user->payments()
+            ->where('status', 'done')
+            ->with('package')
+            ->orderByDesc('travel_date')
+            ->get();
+
+        // Testimoni: testimoni milik user
+        $testimonials = $user->hasMany(\App\Models\Testimonial::class)
+            ->with('payment.package')
+            ->orderByDesc('created_at')
+            ->get();
+
+        // Favorit: destinasi yang disimpan user
+        $favorites = $user->favorites()->with('package')->get();
+
+        return view('profile.index', compact('user', 'tickets', 'trips', 'testimonials', 'favorites'));
     }
 
     public function updateProfile(Request $request)

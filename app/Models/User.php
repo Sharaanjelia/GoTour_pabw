@@ -9,6 +9,13 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    /**
+     * Relasi ke tabel favorites
+     */
+    public function favorites()
+    {
+        return $this->hasMany(\App\Models\Favorite::class);
+    }
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 

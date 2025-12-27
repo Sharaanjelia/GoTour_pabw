@@ -294,6 +294,13 @@
                 </p>
             @else
                 <a href="{{ route('payments.create', ['package_id' => $package->id]) }}" class="cta-btn">Pesan Sekarang</a>
+                <button id="btn-favorite" data-package-id="{{ $package->id }}" style="margin-top:1rem;display:flex;align-items:center;gap:0.5rem;width:100%;justify-content:center;background:#fff;border:1.5px solid #0ea5a2;color:#0ea5a2;padding:0.75rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;font-size:1rem;transition:background 0.2s;">
+                    <svg id="icon-heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px;height:24px;">
+                        <path id="heart-path" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="none" stroke="#0ea5a2"/>
+                    </svg>
+                    <span id="favorite-label">Tambah ke Favorit</span>
+                </button>
+                <div id="favorite-success" style="display:none;color:#16a34a;text-align:center;margin-top:0.5rem;font-size:0.95rem;font-weight:600;">Berhasil ditambahkan ke favorit!</div>
             @endguest
         </aside>
     </div>
@@ -306,3 +313,43 @@
     </a>
 </div>
 @endsection
+
+@push('scripts')
+@auth
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('btn-favorite');
+        if (!btn) return;
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            btn.disabled = true;
+            const packageId = btn.dataset.packageId;
+            fetch('/favorite', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ package_id: packageId })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('heart-path').setAttribute('fill', '#0ea5a2');
+                    document.getElementById('favorite-label').textContent = 'Sudah di Favorit';
+                    btn.style.background = '#f0fdfa';
+                    btn.style.color = '#16a34a';
+                    btn.style.borderColor = '#16a34a';
+                    document.getElementById('favorite-success').style.display = 'block';
+                } else {
+                    alert('Gagal menambah favorit.');
+                }
+            })
+            .catch(() => alert('Gagal menambah favorit.'))
+            .finally(() => { btn.disabled = false; });
+        });
+    });
+</script>
+@endauth
+@endpush

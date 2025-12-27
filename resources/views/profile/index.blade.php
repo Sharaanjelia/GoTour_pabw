@@ -695,48 +695,13 @@
                     <p class="profile-subtitle">Lihat detail pemesanan dan itinerary perjalananmu</p>
                 </div>
 
-                @php
-                $tickets = [
-                    [
-                        'package' => 'Wisata Kawah Putih & Situ Patenggang',
-                        'date' => '28 Jan 2026',
-                        'participants' => 4,
-                        'amount' => 2800000,
-                        'transaction' => 'TRX2025122701',
-                        'method' => 'BCA',
-                        'duration' => '2 Hari 1 Malam',
-                        'itinerary' => "HARI 1:\n08.00 - Penjemputan di hotel/meeting point\n09.30 - Tiba di Kawah Putih, eksplorasi kawah\n11.00 - Foto session di Kawah Putih\n12.30 - Makan siang di restoran lokal\n14.00 - Perjalanan ke Situ Patenggang\n15.00 - Aktivitas di danau (perahu, foto)\n17.00 - Check-in homestay\n19.00 - Makan malam & free time\n\nHARI 2:\n07.00 - Sarapan pagi\n08.30 - Kunjungan kebun strawberry\n10.00 - Belanja oleh-oleh\n12.00 - Makan siang\n13.30 - Perjalanan kembali\n15.00 - Tiba di drop point"
-                    ],
-                    [
-                        'package' => 'Adventure Gunung Tangkuban Perahu',
-                        'date' => '15 Feb 2026',
-                        'participants' => 2,
-                        'amount' => 1500000,
-                        'transaction' => 'TRX2025122702',
-                        'method' => 'GOPAY',
-                        'duration' => '1 Hari',
-                        'itinerary' => "07.00 - Penjemputan di hotel\n08.30 - Tiba di Gunung Tangkuban Perahu\n09.00 - Eksplorasi Kawah Ratu\n10.00 - Trekking ke Kawah Upas\n11.30 - Makan siang box di area wisata\n13.00 - Kunjungan ke Kawah Domas (berendam kaki)\n14.30 - Belanja oleh-oleh khas Lembang\n16.00 - Perjalanan kembali\n17.30 - Drop off di hotel"
-                    ],
-                    [
-                        'package' => 'Bandung Culinary Night Tour',
-                        'date' => '10 Mar 2026',
-                        'participants' => 3,
-                        'amount' => 1200000,
-                        'transaction' => 'TRX2025122703',
-                        'method' => 'VISA',
-                        'duration' => '4 Jam',
-                        'itinerary' => "18.00 - Penjemputan di hotel\n18.30 - Makan malam di Warung Nasi Ampera\n19.30 - Dessert di Kartika Sari (brownies & bolen)\n20.30 - Coffee time di Kopi Toko Djawa\n21.30 - Night market Braga City Walk\n22.30 - Drop off di hotel"
-                    ]
-                ];
-                @endphp
-
-                @foreach($tickets as $ticket)
+                @forelse($tickets as $ticket)
                 <div class="profile-card" style="margin-bottom: 2rem;">
                     <div class="profile-card-header">
                         <svg class="profile-card-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
                         </svg>
-                        <h3 class="profile-card-title">{{ $ticket['package'] }}</h3>
+                        <h3 class="profile-card-title">{{ $ticket->package->title ?? '-' }}</h3>
                         <span class="badge badge-success" style="margin-left: auto;">LUNAS</span>
                     </div>
 
@@ -744,29 +709,29 @@
                         <div>
                             <div class="info-row">
                                 <span class="info-label">Tanggal Berangkat</span>
-                                <span class="info-value">{{ $ticket['date'] }}</span>
+                                <span class="info-value">{{ $ticket->travel_date ? $ticket->travel_date->format('d M Y') : '-' }}</span>
                             </div>
                             <div class="info-row">
                                 <span class="info-label">Jumlah Peserta</span>
-                                <span class="info-value">{{ $ticket['participants'] }} orang</span>
+                                <span class="info-value">{{ $ticket->participants }} orang</span>
                             </div>
                             <div class="info-row">
                                 <span class="info-label">Total Pembayaran</span>
-                                <span class="info-value">Rp {{ number_format($ticket['amount'], 0, ',', '.') }}</span>
+                                <span class="info-value">Rp {{ number_format($ticket->amount, 0, ',', '.') }}</span>
                             </div>
                         </div>
                         <div>
                             <div class="info-row">
                                 <span class="info-label">ID Transaksi</span>
-                                <span class="info-value" style="font-size: 0.8rem;">{{ $ticket['transaction'] }}</span>
+                                <span class="info-value" style="font-size: 0.8rem;">{{ $ticket->transaction_id }}</span>
                             </div>
                             <div class="info-row">
                                 <span class="info-label">Metode Pembayaran</span>
-                                <span class="info-value">{{ strtoupper($ticket['method']) }}</span>
+                                <span class="info-value">{{ strtoupper($ticket->payment_method) }}</span>
                             </div>
                             <div class="info-row">
                                 <span class="info-label">Durasi</span>
-                                <span class="info-value">{{ $ticket['duration'] }}</span>
+                                <span class="info-value">{{ $ticket->package->duration ?? '-' }}</span>
                             </div>
                         </div>
                     </div>
@@ -778,7 +743,15 @@
                             </svg>
                             Itinerary Perjalanan
                         </h4>
-                        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; line-height: 1.8; color: #475569; white-space: pre-line;">{{ $ticket['itinerary'] }}</div>
+                        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; line-height: 1.8; color: #475569; white-space: pre-line;">
+                            @php
+                                $itinerary = $ticket->package->itinerary ?? '-';
+                                if (is_array($itinerary)) {
+                                    $itinerary = implode("\n", $itinerary);
+                                }
+                            @endphp
+                            {{ $itinerary }}
+                        </div>
                     </div>
 
                     <div style="border-top: 2px solid #f1f5f9; padding-top: 1.75rem; margin-top: 1.75rem;">
@@ -790,7 +763,9 @@
                         </button>
                     </div>
                 </div>
-                @endforeach
+                @empty
+                <div class="profile-card">Belum ada e-tiket.</div>
+                @endforelse
             </div>
 
             <!-- Tab: Riwayat Trip -->
@@ -800,15 +775,7 @@
                     <p class="profile-subtitle">Semua perjalanan wisata yang pernah kamu lakukan</p>
                 </div>
 
-                @php
-                $trips = [
-                    ['title' => 'Wisata Kawah Putih & Situ Patenggang', 'date' => '15 Des 2025', 'status' => 'Selesai', 'participants' => 4, 'image' => 'kawah-putih.jpg'],
-                    ['title' => 'Adventure Gunung Tangkuban Perahu', 'date' => '20 Nov 2025', 'status' => 'Selesai', 'participants' => 2, 'image' => 'tangkuban-perahu.jpg'],
-                    ['title' => 'Bandung Culinary Night Tour', 'date' => '05 Nov 2025', 'status' => 'Selesai', 'participants' => 3, 'image' => 'culinary.jpg']
-                ];
-                @endphp
-
-                @foreach($trips as $trip)
+                @forelse($trips as $trip)
                 <div class="profile-card" style="margin-bottom: 1.75rem;">
                     <div style="display: flex; gap: 1.5rem;">
                         <div style="width: 140px; height: 140px; border-radius: 12px; background: linear-gradient(135deg, #0c1e3d 0%, #1a365d 100%); flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
@@ -817,23 +784,23 @@
                         <div style="flex: 1;">
                             <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.75rem;">
                                 <div>
-                                    <h4 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-bottom: 0.5rem;">{{ $trip['title'] }}</h4>
+                                    <h4 style="font-size: 1.25rem; font-weight: 800; color: #0f172a; margin-bottom: 0.5rem;">{{ $trip->package->title ?? '-' }}</h4>
                                     <div style="display: flex; gap: 1.25rem; font-size: 0.875rem; color: #64748b;">
                                         <span style="display: flex; align-items: center; gap: 0.375rem;">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 16px; height: 16px;">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                             </svg>
-                                            {{ $trip['date'] }}
+                                            {{ $trip->travel_date ? $trip->travel_date->format('d M Y') : '-' }}
                                         </span>
                                         <span style="display: flex; align-items: center; gap: 0.375rem;">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 16px; height: 16px;">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                                             </svg>
-                                            {{ $trip['participants'] }} Peserta
+                                            {{ $trip->participants }} Peserta
                                         </span>
                                     </div>
                                 </div>
-                                <span class="badge badge-success">{{ $trip['status'] }}</span>
+                                <span class="badge badge-success">Selesai</span>
                             </div>
                             <p style="color: #64748b; line-height: 1.6; margin-bottom: 1rem;">
                                 Perjalanan yang sangat berkesan dengan pemandangan indah dan pelayanan yang memuaskan dari tim GoTour.
@@ -850,7 +817,9 @@
                         </div>
                     </div>
                 </div>
-                @endforeach
+                @empty
+                <div class="profile-card">Belum ada riwayat trip.</div>
+                @endforelse
             </div>
 
             <!-- Tab: Riwayat Testimoni -->
@@ -860,15 +829,7 @@
                     <p class="profile-subtitle">Lihat semua testimoni yang pernah kamu berikan</p>
                 </div>
 
-                @php
-                $myTestimonials = [
-                    ['message' => 'Pengalaman wisata yang luar biasa! Guide sangat ramah dan profesional, destinasi wisatanya sangat indah dan instagramable. Highly recommended untuk liburan keluarga!', 'rating' => 5, 'date' => '3 hari yang lalu'],
-                    ['message' => 'Pelayanan sangat memuaskan, itinerary terstruktur dengan baik. Harga yang ditawarkan sangat sesuai dengan fasilitas dan pengalaman yang diberikan. Pasti akan booking lagi!', 'rating' => 5, 'date' => '1 minggu yang lalu'],
-                    ['message' => 'Trip yang menyenangkan bersama keluarga. Anak-anak sangat menikmati setiap momennya, terutama aktivitas outdoor dan kuliner lokalnya. Terima kasih GoTour!', 'rating' => 4, 'date' => '2 minggu yang lalu']
-                ];
-                @endphp
-
-                @foreach($myTestimonials as $testimonial)
+                @forelse($testimonials as $testimonial)
                 <div class="profile-card" style="margin-bottom: 1.75rem;">
                     <div style="display: flex; gap: 1.5rem; align-items: start;">
                         <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #0c1e3d 0%, #1a365d 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: 800; flex-shrink: 0;">
@@ -882,22 +843,24 @@
                                     <div style="display: flex; align-items: center; gap: 0.5rem;">
                                         <div style="display: flex; gap: 0.125rem;">
                                             @for($i = 1; $i <= 5; $i++)
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="{{ $i <= $testimonial['rating'] ? '#fbbf24' : '#e2e8f0' }}" style="width: 18px; height: 18px;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="{{ $i <= ($testimonial->rating ?? 0) ? '#fbbf24' : '#e2e8f0' }}" style="width: 18px; height: 18px;">
                                                     <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
                                                 </svg>
                                             @endfor
                                         </div>
-                                        <span style="font-size: 0.875rem; color: #94a3b8;">{{ $testimonial['date'] }}</span>
+                                        <span style="font-size: 0.875rem; color: #94a3b8;">{{ $testimonial->created_at->diffForHumans() }}</span>
                                     </div>
                                 </div>
                                 <span class="badge badge-success">POSTED</span>
                             </div>
 
-                            <p style="color: #475569; line-height: 1.7; font-size: 0.9375rem;">{{ $testimonial['message'] }}</p>
+                            <p style="color: #475569; line-height: 1.7; font-size: 0.9375rem;">{{ $testimonial->message }}</p>
                         </div>
                     </div>
                 </div>
-                @endforeach
+                @empty
+                <div class="profile-card">Belum ada testimoni.</div>
+                @endforelse
             </div>
 
             <!-- Tab: Favorit Wisata -->
@@ -907,19 +870,11 @@
                     <p class="profile-subtitle">Destinasi wisata yang kamu simpan untuk dikunjungi nanti</p>
                 </div>
 
-                @php
-                $favorites = [
-                    ['title' => 'Floating Market Lembang', 'category' => 'Kuliner & Belanja', 'rating' => 4.8, 'price' => 350000, 'duration' => '1 Hari'],
-                    ['title' => 'Glamping Ciwidey Valley Resort', 'category' => 'Wisata Alam', 'rating' => 4.9, 'price' => 1250000, 'duration' => '2H1M'],
-                    ['title' => 'Stone Garden Citatah', 'category' => 'Wisata Alam', 'rating' => 4.7, 'price' => 450000, 'duration' => '1 Hari']
-                ];
-                @endphp
-
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.75rem;">
-                    @foreach($favorites as $fav)
-                    <div class="profile-card" style="padding: 0; overflow: hidden;">
-                        <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #0c1e3d 0%, #1a365d 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem; position: relative;">
-                            🏞️
+                    @forelse($favorites as $fav)
+                    <div class="profile-card" style="padding: 0; overflow: hidden;" data-favorite-id="{{ $fav->id }}">
+                        <div style="width: 100%; height: 200px; background: linear-gradient(135deg, #0c1e3d 0%, #1a365d 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem; position: relative; overflow: hidden;">
+                            <img src="{{ $fav->package->cover_image_url ?? asset('images/download.jpeg') }}" alt="{{ $fav->package->title }}" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.onerror=null;this.src='{{ asset('images/download.jpeg') }}';">
                             <button style="position: absolute; top: 1rem; right: 1rem; background: white; border: none; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#dc2626" style="width: 24px; height: 24px;">
                                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -928,31 +883,33 @@
                         </div>
                         <div style="padding: 1.5rem;">
                             <div style="display: inline-block; background: #dbeafe; color: #1e40af; padding: 0.375rem 0.875rem; border-radius: 6px; font-size: 0.75rem; font-weight: 700; margin-bottom: 0.875rem;">
-                                {{ $fav['category'] }}
+                                {{ $fav->package->category->name ?? '-' }}
                             </div>
-                            <h4 style="font-size: 1.125rem; font-weight: 800; color: #0f172a; margin-bottom: 0.625rem;">{{ $fav['title'] }}</h4>
+                            <h4 style="font-size: 1.125rem; font-weight: 800; color: #0f172a; margin-bottom: 0.625rem;">{{ $fav->package->title ?? '-' }}</h4>
                             <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
                                 <div style="display: flex; gap: 0.125rem;">
                                     @for($i = 1; $i <= 5; $i++)
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="{{ $i <= floor($fav['rating']) ? '#fbbf24' : '#e2e8f0' }}" style="width: 16px; height: 16px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="{{ $i <= floor($fav->package->rating ?? 0) ? '#fbbf24' : '#e2e8f0' }}" style="width: 16px; height: 16px;">
                                         <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
                                     </svg>
                                     @endfor
                                 </div>
-                                <span style="font-size: 0.875rem; font-weight: 700; color: #64748b;">{{ $fav['rating'] }}</span>
+                                <span style="font-size: 0.875rem; font-weight: 700; color: #64748b;">{{ number_format($fav->package->rating ?? 0, 1) }}</span>
                             </div>
                             <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 2px solid #f1f5f9;">
                                 <div>
                                     <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700;">Mulai dari</div>
-                                    <div style="font-size: 1.25rem; font-weight: 800; color: #0c1e3d;">Rp {{ number_format($fav['price'], 0, ',', '.') }}</div>
+                                    <div style="font-size: 1.25rem; font-weight: 800; color: #0c1e3d;">Rp {{ number_format($fav->package->price ?? 0, 0, ',', '.') }}</div>
                                 </div>
-                                <button class="btn btn-primary" style="font-size: 0.875rem; padding: 0.625rem 1.25rem;">
+                                <a href="{{ route('payments.create', ['package_id' => $fav->package->id]) }}" class="btn btn-primary" style="font-size: 0.875rem; padding: 0.625rem 1.25rem;">
                                     Booking
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
-                    @endforeach
+                    @empty
+                    <div class="profile-card">Belum ada wisata favorit.</div>
+                    @endforelse
                 </div>
             </div>
 
@@ -1126,11 +1083,9 @@
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const tab = link.dataset.tab;
-                
                 // Update active link
                 document.querySelectorAll('[data-tab]').forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
-                
                 // Show corresponding content
                 document.querySelectorAll('.profile-main > .tab-content').forEach(content => {
                     if (content.id === `tab-${tab}`) {
@@ -1146,11 +1101,9 @@
         document.querySelectorAll('[data-subtab]').forEach(tab => {
             tab.addEventListener('click', () => {
                 const subtab = tab.dataset.subtab;
-                
                 // Update active tab
                 document.querySelectorAll('[data-subtab]').forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
-                
                 // Show corresponding content
                 document.querySelectorAll('#tab-pengaturan .tab-content').forEach(content => {
                     if (content.id === `subtab-${subtab}`) {
@@ -1159,6 +1112,37 @@
                         content.classList.remove('active');
                     }
                 });
+            });
+        });
+
+        // AJAX Remove Favorite (Profile > Favorit Wisata)
+        document.querySelectorAll('#tab-favorit .profile-card button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Only target the heart button (remove favorite)
+                if (btn.querySelector('svg path[d*="21.35"]')) {
+                    e.preventDefault();
+                    const card = btn.closest('.profile-card');
+                    // Find favorite id from blade (data-favorite-id)
+                    const favId = card && card.dataset.favoriteId;
+                    if (!favId) return;
+                    if (!window.confirm('Hapus dari daftar favorit?')) return;
+                    fetch('/favorite/' + favId, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json',
+                        },
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            card.remove();
+                        } else {
+                            alert('Gagal menghapus favorit.');
+                        }
+                    })
+                    .catch(() => alert('Gagal menghapus favorit.'));
+                }
             });
         });
     </script>

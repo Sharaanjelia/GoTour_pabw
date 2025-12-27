@@ -11,6 +11,15 @@ class Package extends Model
 {
     use HasFactory;
 
+    /**
+     * Relasi ke tabel favorites
+     */
+    public function favorites()
+    {
+        return $this->hasMany(\App\Models\Favorite::class);
+    }
+    use HasFactory;
+
 
     protected $fillable = [
         'user_id',
