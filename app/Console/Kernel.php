@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\MakeAdminUser::class,
+        \App\Console\Commands\ExportAllTablesToCsv::class,
+        \App\Console\Commands\ImportAllCsvToMysql::class,
     ];
 
     /**
