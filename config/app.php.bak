@@ -1,0 +1,7 @@
+<?php
+
+// BACKUP of original config/app.php before adding providers array
+
+return [
+    // ...original content...
+];
