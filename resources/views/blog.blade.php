@@ -74,9 +74,9 @@
 
     /* Blog Section */
     .blog-section {
-        max-width: 1200px;
+        max-width: 1400px;
         margin: 0 auto;
-        padding: 4rem 1.5rem;
+        padding: 4rem 6rem;
     }
     .blog-section-header {
         margin-bottom: 3rem;
@@ -97,7 +97,7 @@
     .blog-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-        gap: 2rem;
+        gap: 4rem 3.5rem;
         margin-bottom: 3rem;
     }
 
