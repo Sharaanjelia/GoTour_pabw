@@ -42,7 +42,7 @@ class BookingController extends Controller
             'travel_date' => 'required|date',
             'participants' => 'required|integer|min:1',
             'amount' => 'required|integer|min:0',
-            'status' => 'required|in:pending,paid,cancelled,refunded',
+            'status' => 'required|in:pending,paid,completed,cancelled,refunded',
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:20',

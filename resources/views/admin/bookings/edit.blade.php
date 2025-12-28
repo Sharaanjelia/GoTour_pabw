@@ -59,12 +59,8 @@
         <br>
 
         <label class="form-label mb-2">Metode Pembayaran
-            <select name="payment_method" class="form-input" required>
-                <option value="">Pilih Metode</option>
-                <option value="transfer" {{ old('payment_method', $booking->payment_method) == 'transfer' ? 'selected' : '' }}>Bank Transfer</option>
-                <option value="ewallet" {{ old('payment_method', $booking->payment_method) == 'ewallet' ? 'selected' : '' }}>E-Wallet</option>
-                <option value="card" {{ old('payment_method', $booking->payment_method) == 'card' ? 'selected' : '' }}>Kartu Kredit/Debit</option>
-            </select>
+            <input type="text" class="form-input" value="{{ $booking->payment_method ? ucfirst($booking->payment_method) : '-' }}" readonly disabled>
+            <input type="hidden" name="payment_method" value="{{ $booking->payment_method }}">
         </label>
         <br>
 
@@ -82,6 +78,7 @@
             <select name="status" class="form-input" required>
                 <option value="pending" {{ old('status', $booking->status) == 'pending' ? 'selected' : '' }}>Pending</option>
                 <option value="paid" {{ old('status', $booking->status) == 'paid' ? 'selected' : '' }}>Paid</option>
+                <option value="completed" {{ old('status', $booking->status) == 'completed' ? 'selected' : '' }}>Selesai</option>
                 <option value="cancelled" {{ old('status', $booking->status) == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                 <option value="refunded" {{ old('status', $booking->status) == 'refunded' ? 'selected' : '' }}>Refunded</option>
             </select>

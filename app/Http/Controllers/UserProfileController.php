@@ -21,7 +21,7 @@ class UserProfileController extends Controller
 
         // Riwayat Trip: pembayaran selesai
         $trips = $user->payments()
-            ->where('status', 'done')
+            ->where('status', 'completed')
             ->with('package')
             ->orderByDesc('travel_date')
             ->get();

@@ -9,7 +9,7 @@ class Payment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id','package_id','amount','status','payment_method','provider','transaction_id','full_name','email','phone','participants','travel_date','requests'];
+    protected $fillable = ['user_id','package_id','amount','status','payment_method','provider','transaction_id','full_name','email','phone','participants','travel_date','requests']; // status bisa: pending, paid, completed, cancelled, refunded
 
     protected $casts = [
         'travel_date' => 'date',
