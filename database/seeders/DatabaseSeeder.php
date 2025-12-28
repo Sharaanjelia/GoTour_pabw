@@ -15,7 +15,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Seeder dinonaktifkan, gunakan SQL dump untuk data.
-        // Tidak melakukan apa-apa
+        // Import semua data dari CSV exports
+        $this->call([
+            UsersCsvSeeder::class,
+            PackagesCsvSeeder::class,
+            BlogPostsCsvSeeder::class,
+            DiscountsCsvSeeder::class,
+            ServicesCsvSeeder::class,
+            TestimonialsCsvSeeder::class,
+            PhotoRecommendationsCsvSeeder::class,
+            PaymentsCsvSeeder::class,
+            CacheCsvSeeder::class,
+            SessionsCsvSeeder::class,
+            MigrationsCsvSeeder::class,
+        ]);
     }
 }
