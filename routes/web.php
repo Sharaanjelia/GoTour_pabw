@@ -16,6 +16,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+            // Download E-Tiket
+            Route::get('/eticket/{payment}', [\App\Http\Controllers\EticketController::class, 'download'])->name('eticket.download');
         // Favorite (wishlist)
         Route::post('/favorite', [\App\Http\Controllers\FavoriteController::class, 'store'])->name('favorite.store');
         Route::delete('/favorite/{id}', [\App\Http\Controllers\FavoriteController::class, 'destroy'])->name('favorite.destroy');

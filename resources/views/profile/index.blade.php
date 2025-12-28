@@ -751,12 +751,12 @@
                     </div>
 
                     <div style="border-top: 2px solid #f1f5f9; padding-top: 1.75rem; margin-top: 1.75rem;">
-                        <button class="btn btn-primary">
+                        <a href="{{ route('eticket.download', $ticket->id) }}" class="btn btn-primary" target="_blank">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 20px; height: 20px;">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                             </svg>
                             Download E-Tiket
-                        </button>
+                        </a>
                     </div>
                 </div>
                 @empty

@@ -8,6 +8,36 @@ class AllPackagesTestimonialSeeder extends Seeder
 {
     public function run(): void
     {
+        // Isi itinerary dummy jika kosong/null
+        foreach (\App\Models\Package::all() as $package) {
+            if (empty($package->itinerary) || $package->itinerary === '-' || $package->itinerary === null) {
+                $package->itinerary = [
+                    'Hari 1: Penjemputan, city tour, wisata kuliner',
+                    'Hari 2: Explore destinasi utama, foto bersama, pulang',
+                ];
+                $package->save();
+            }
+        }
+        // Isi itinerary dummy jika kosong/null
+        foreach (\App\Models\Package::all() as $package) {
+            if (empty($package->itinerary) || $package->itinerary === '-' || $package->itinerary === null) {
+                $package->itinerary = [
+                    'Hari 1: Penjemputan, city tour, wisata kuliner',
+                    'Hari 2: Explore destinasi utama, foto bersama, pulang',
+                ];
+                $package->save();
+            }
+        }
+        // Set itinerary dummy jika kosong
+        foreach (\App\Models\Package::all() as $package) {
+            if (empty($package->itinerary) || $package->itinerary === '-' || $package->itinerary === null) {
+                $package->itinerary = [
+                    'Hari 1: Penjemputan, city tour, wisata kuliner',
+                    'Hari 2: Explore destinasi utama, foto bersama, pulang',
+                ];
+                $package->save();
+            }
+        }
         $imageFiles = [
             'shara.jpg',
             'khairunnisa.jpg',
