@@ -488,7 +488,7 @@
                 <a href="{{ route('home') }}" class="btn btn-tertiary">
                     🏠 Kembali ke Beranda
                 </a>
-                <a href="{{ route('paket.index') }}" class="btn btn-secondary">
+                <a href="{{ route('paket.index', ['upgrade_from' => $payment->package->duration]) }}" class="btn btn-secondary">
                     🔄 Ganti Paket Wisata
                 </a>
                 <a href="#" onclick="window.print(); return false;" class="btn btn-primary">

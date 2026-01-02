@@ -11,8 +11,11 @@
             <h4 style="margin:0 0 0.2em 0;">{{ $trip->package->name ?? $trip->package->title }}</h4>
             <p style="margin:0 0 0.2em 0;">Status: {{ $trip->status }}</p>
             <div style="display:flex;gap:0.5rem;align-items:center;">
-                <a href="{{ route('testimoni.index', ['package_id' => $trip->package->id]) }}" class="btn btn-primary">Testimoni</a>
-                <a href="{{ route('user.trips.show', $trip->id) }}" class="btn btn-light">Lihat Detail</a>
+                @if(!$trip->testimonial)
+                    <a href="{{ route('testimoni.create', ['package_id' => $trip->package->id, 'trip_id' => $trip->id]) }}" class="btn btn-primary">Beri Testimoni</a>
+                @else
+                    <span class="badge badge-success">Sudah Memberi Testimoni</span>
+                @endif
             </div>
             @if($trip->testimonial)
                 <div style="margin-top:0.5em;">

@@ -9,14 +9,22 @@ class PackageController extends Controller
 {
     public function index()
     {
-        return response()->json(Package::all());
+        return response()->json(
+            Package::all()->map(function($package) {
+                $data = $package->toArray();
+                $data['cover_image_url'] = $package->cover_image_url;
+                return $data;
+            })
+        );
     }
 
     public function show($id)
     {
         $package = Package::find($id);
         if (!$package) return response()->json(['error' => 'Not found'], 404);
-        return response()->json($package);
+        $data = $package->toArray();
+        $data['cover_image_url'] = $package->cover_image_url;
+        return response()->json($data);
     }
 
     public function store(Request $request)

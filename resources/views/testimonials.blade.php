@@ -8,6 +8,11 @@
         <p>Berbagai pengalaman dan review dari pelanggan GoTour.</p>
     </div>
     <div class="container mx-auto py-8">
+        @if(session('success'))
+            <div class="alert alert-success" style="margin-bottom: 1.5rem; color: #155724; background: #d4edda; border: 1px solid #c3e6cb; padding: 1rem; border-radius: 6px;">
+                {{ session('success') }}
+            </div>
+        @endif
         @if($items->count())
             <div class="testimonials-grid">
                 @foreach($items as $testimonial)

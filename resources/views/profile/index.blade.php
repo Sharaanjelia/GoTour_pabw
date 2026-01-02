@@ -503,13 +503,125 @@
         <!-- Sidebar -->
         <aside class="profile-sidebar">
             <div class="profile-avatar">
-                <img src="https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&size=200&background=0c1e3d&color=fff&bold=true" alt="{{ $user->name }}">
-                <div class="profile-avatar-badge">
+                                <img id="profile-photo" src="{{ $user->photo_url ?? 'https://ui-avatars.com/api/?name=' . urlencode($user->name) . '&size=200&background=0c1e3d&color=fff&bold=true' }}" alt="{{ $user->name }}" style="cursor:pointer;"
+                                    onerror="this.onerror=null;this.src='https://ui-avatars.com/api/?name={{ urlencode($user->name) }}&size=200&background=0c1e3d&color=fff&bold=true'">
+                                <div id="photo-upload-loading" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;background:rgba(255,255,255,0.7);border-radius:50%;padding:20px;">
+                                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="animation:spin 1s linear infinite"><circle cx="20" cy="20" r="18" stroke="#0c1e3d" stroke-width="4" stroke-linecap="round" stroke-dasharray="90 60"/></svg>
+                                </div>
+                                <div id="photo-upload-message" style="text-align:center;margin-top:10px;font-weight:bold;"></div>
+                                <style>@keyframes spin{100%{transform:rotate(360deg);}}</style>
+                <input type="file" id="photo-input" style="display:none" accept="image/*">
+                                <button id="photo-upload-btn" type="button" class="btn btn-secondary" style="width:100%;margin-top:10px;">Upload Foto Baru</button>
+                <div class="profile-avatar-badge" onclick="document.getElementById('profile-photo').click()" style="cursor:pointer;">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                 </div>
+                <script>
+                document.getElementById('profile-photo').onclick = function() {
+                    document.getElementById('photo-input').click();
+                };
+                document.getElementById('photo-upload-btn').onclick = function() {
+                    document.getElementById('photo-input').click();
+                };
+                document.getElementById('photo-input').onchange = function(event) {
+                    const btn = document.getElementById('photo-upload-btn');
+                    btn.disabled = true;
+                    btn.textContent = 'Uploading...';
+                    const file = event.target.files[0];
+                    const msg = document.getElementById('photo-upload-message');
+                    if (!file) return;
+                    // Validasi ekstensi dan ukuran file
+                    const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+                    if (!allowedTypes.includes(file.type)) {
+                        msg.style.color = '#991b1b';
+                        msg.textContent = 'Format file harus JPG, JPEG, PNG, atau GIF';
+                        return;
+                    }
+                    if (file.size > 2 * 1024 * 1024) { // 2MB
+                        msg.style.color = '#991b1b';
+                        msg.textContent = 'Ukuran file maksimal 2MB';
+                        return;
+                    }
+                    // Resize gambar sebelum upload (maks 600x600px, kualitas 0.8)
+                    const resizeImage = (file, callback) => {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const img = new Image();
+                            img.onload = function() {
+                                const canvas = document.createElement('canvas');
+                                let width = img.width;
+                                let height = img.height;
+                                const maxDim = 600;
+                                if (width > maxDim || height > maxDim) {
+                                    if (width > height) {
+                                        height = Math.round(height * maxDim / width);
+                                        width = maxDim;
+                                    } else {
+                                        width = Math.round(width * maxDim / height);
+                                        height = maxDim;
+                                    }
+                                }
+                                canvas.width = width;
+                                canvas.height = height;
+                                const ctx = canvas.getContext('2d');
+                                ctx.drawImage(img, 0, 0, width, height);
+                                canvas.toBlob(function(blob) {
+                                    callback(blob);
+                                }, file.type, 0.8);
+                            };
+                            img.onerror = function() {
+                                callback(file); // fallback jika gagal resize
+                            };
+                            img.src = e.target.result;
+                        };
+                        reader.onerror = function() {
+                            callback(file); // fallback jika gagal baca
+                        };
+                        reader.readAsDataURL(file);
+                    };
+                    const token = localStorage.getItem('token');
+                    const loading = document.getElementById('photo-upload-loading');
+                    loading.style.display = 'block';
+                    msg.textContent = '';
+                    resizeImage(file, function(resizedBlob) {
+                        const formData = new FormData();
+                        formData.append('photo', resizedBlob, file.name);
+                        fetch('/api/profile/photo', {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': token ? 'Bearer ' + token : '',
+                            },
+                            body: formData
+                        })
+                        .then(async res => {
+                            let data;
+                            try { data = await res.json(); } catch { data = {}; }
+                            loading.style.display = 'none';
+                            btn.disabled = false;
+                            btn.textContent = 'Upload Foto Baru';
+                            window.scrollTo({top:0,behavior:'smooth'});
+                            if (res.ok && data.photo_url) {
+                                document.getElementById('profile-photo').src = data.photo_url;
+                                msg.style.color = '#166534';
+                                msg.textContent = 'Foto profil berhasil diupload!';
+                            } else {
+                                msg.style.color = '#991b1b';
+                                msg.textContent = data.message || 'Gagal upload foto';
+                            }
+                        })
+                        .catch(() => {
+                            loading.style.display = 'none';
+                            btn.disabled = false;
+                            btn.textContent = 'Upload Foto Baru';
+                            window.scrollTo({top:0,behavior:'smooth'});
+                            msg.style.color = '#991b1b';
+                            msg.textContent = 'Gagal upload foto';
+                        });
+                    });
+                };
+                </script>
             </div>
 
             <div class="profile-info">
@@ -774,8 +886,12 @@
                 @forelse($trips as $trip)
                 <div class="profile-card" style="margin-bottom: 1.75rem;">
                     <div style="display: flex; gap: 1.5rem;">
-                        <div style="width: 140px; height: 140px; border-radius: 12px; background: linear-gradient(135deg, #0c1e3d 0%, #1a365d 100%); flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
-                            📸
+                        <div style="width: 140px; height: 140px; border-radius: 12px; background: linear-gradient(135deg, #0c1e3d 0%, #1a365d 100%); flex-shrink: 0; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                            @if(isset($trip->package) && $trip->package && $trip->package->cover_image_url)
+                                <img src="{{ $trip->package->cover_image_url }}" alt="{{ $trip->package->title ?? '-' }}" style="width:100%;height:100%;object-fit:cover;">
+                            @else
+                                <img src="{{ asset('images/download.jpeg') }}" alt="No Image" style="width:100%;height:100%;object-fit:cover;">
+                            @endif
                         </div>
                         <div style="flex: 1;">
                             <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.75rem;">
@@ -802,14 +918,21 @@
                                 Perjalanan yang sangat berkesan dengan pemandangan indah dan pelayanan yang memuaskan dari tim GoTour.
                             </p>
                             <div style="display: flex; gap: 0.75rem;">
-                                <button class="btn btn-primary" style="font-size: 0.875rem; padding: 0.625rem 1.25rem;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 16px; height: 16px;">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                    </svg>
-                                    Download Voucher
-                                </button>
-                                <button class="btn btn-secondary" style="font-size: 0.875rem; padding: 0.625rem 1.25rem;">Lihat Detail</button>
+                                @if(!$trip->testimonial)
+                                    @if($trip->package)
+                                        <a href="{{ route('testimoni.create', ['package_id' => $trip->package->id, 'trip_id' => $trip->id]) }}" class="btn btn-primary">Beri Testimoni</a>
+                                    @else
+                                        <span class="badge badge-secondary">Paket tidak ditemukan</span>
+                                    @endif
+                                @else
+                                    <span class="badge badge-success">Sudah Memberi Testimoni</span>
+                                @endif
                             </div>
+                            @if($trip->testimonial)
+                                <div style="margin-top:0.5em;">
+                                    <b>Testimoni:</b> {{ $trip->testimonial->message }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -828,8 +951,12 @@
                 @forelse($testimonials as $testimonial)
                 <div class="profile-card" style="margin-bottom: 1.75rem;">
                     <div style="display: flex; gap: 1.5rem; align-items: start;">
-                        <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #0c1e3d 0%, #1a365d 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: 800; flex-shrink: 0;">
-                            {{ substr($user->name, 0, 1) }}
+                        <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #0c1e3d 0%, #1a365d 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: 800; flex-shrink: 0; overflow: hidden;">
+                            @if($testimonial->photo_url)
+                                <img src="{{ $testimonial->photo_url }}" alt="Foto {{ $testimonial->name }}" style="width:100%;height:100%;object-fit:cover;">
+                            @else
+                                {{ substr($user->name, 0, 1) }}
+                            @endif
                         </div>
 
                         <div style="flex: 1;">

@@ -21,18 +21,28 @@ class Testimonial extends Model
 
     public function getPhotoUrlAttribute()
     {
+        $default = '/images/default-user.png'; // pastikan file ini ada di public/images
+
         if (!$this->photo) {
-            return null;
+            return $default;
         }
-        
-        if (str_starts_with($this->photo, '/storage/')) {
-            return $this->photo;
+
+        $path = $this->photo;
+        if (str_starts_with($path, '/storage/')) {
+            $fullPath = public_path($path);
+        } elseif (str_starts_with($path, 'storage/')) {
+            $fullPath = public_path('/' . $path);
+            $path = '/' . $path;
+        } else {
+            $fullPath = public_path('/storage/' . $path);
+            $path = '/storage/' . $path;
         }
-        
-        if (str_starts_with($this->photo, 'storage/')) {
-            return '/' . $this->photo;
+
+        // Jika file tidak ada, pakai default
+        if (!file_exists($fullPath)) {
+            return $default;
         }
-        
-        return '/storage/' . $this->photo;
+
+        return $path;
     }
 }

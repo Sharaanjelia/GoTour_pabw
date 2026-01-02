@@ -57,21 +57,21 @@ class Package extends Model
     
     public function getCoverImageUrlAttribute()
     {
+        $default = '/storage/dummy.jpg'; // pastikan file ini ada di public/storage
         $path = $this->cover_image;
-        if (!$path) return null;
+        if (!$path) return $default;
 
         if (preg_match('#^https?://#i', $path)) return $path;
-    
+
         if (str_starts_with($path, '/storage/')) {
             $path = substr($path, strlen('/storage/'));
         }
-        
         if (str_starts_with($path, 'storage/')) {
             $path = substr($path, strlen('storage/'));
         }
         if (Storage::disk('public')->exists($path)) {
             return '/storage/' . ltrim($path, '/');
         }
-        return null;
+        return $default;
     }
 }

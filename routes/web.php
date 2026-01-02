@@ -44,6 +44,8 @@ Route::get('/blog', [\App\Http\Controllers\BlogController::class, 'index'])->nam
 Route::get('/layanan', [\App\Http\Controllers\ServiceController::class, 'index'])->name('layanan.index');
 Route::get('/discounts', [\App\Http\Controllers\DiscountController::class, 'index'])->name('discounts.index');
 Route::get('/foto', [\App\Http\Controllers\PhotoController::class, 'index'])->name('foto.index');
+
+Route::get('/testimoni/create', [\App\Http\Controllers\TestimonialController::class, 'create'])->name('testimoni.create');
 Route::get('/testimoni', [\App\Http\Controllers\TestimonialController::class, 'index'])->name('testimoni.index');
 Route::post('/testimoni', [\App\Http\Controllers\TestimonialController::class, 'store'])->name('testimoni.store');
 

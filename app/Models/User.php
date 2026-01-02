@@ -11,11 +11,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
@@ -25,28 +20,16 @@ class User extends Authenticatable
         'city',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'is_admin' => 'boolean',
     ];
-
-    /* =====================
-       RELATIONSHIPS
-    ===================== */
 
     public function favorites()
     {
@@ -58,10 +41,6 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\Payment::class);
     }
 
-    /* =====================
-       ACCESSORS (OPSIONAL)
-    ===================== */
-
     public function getPoinAttribute()
     {
         return 2450;
@@ -70,5 +49,31 @@ class User extends Authenticatable
     public function getTripsCountAttribute()
     {
         return 12;
+    }
+
+    public function getPhotoUrlAttribute()
+    {
+        $default = '/storage/dummy.jpg'; // pastikan file ini ada di public/storage
+
+        if (!$this->photo) {
+            return $default;
+        }
+
+        $path = $this->photo;
+        if (str_starts_with($path, '/storage/')) {
+            $fullPath = public_path($path);
+        } elseif (str_starts_with($path, 'storage/')) {
+            $fullPath = public_path('/' . $path);
+            $path = '/' . $path;
+        } else {
+            $fullPath = public_path('/storage/' . $path);
+            $path = '/storage/' . $path;
+        }
+
+        if (!file_exists($fullPath)) {
+            return $default;
+        }
+
+        return $path;
     }
 }
