@@ -63,7 +63,7 @@
             <h2>Tim Kami</h2>
             <div class="team">
                 <div class="team-member scroll-animate">
-                    <img src="{{ asset('images/Shara.jpg') }}" alt="Shara Anjelia">
+                    <img src="{{ asset('images/fotoshara.jpg') }}" alt="Shara Anjelia">
                     <h3>Shara Anjelia</h3>
                     <p>CEO & Pendiri</p>
                 </div>
@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="team-member scroll-animate">
-                    <img src="{{ asset('images/Khairunnisa.jpg') }}" alt="Khairunnisa Nur Aqila">
+                    <img src="{{ asset('images/khairunnisa.jpg') }}" alt="Khairunnisa Nur Aqila">
                     <h3>Khairunnisa Nur Aqila</h3>
                     <p>Desainer UI/UX</p>
                 </div>

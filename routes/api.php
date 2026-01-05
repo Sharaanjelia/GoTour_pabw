@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\DiscountController;
 use App\Http\Controllers\Api\PaymentApiController;
 use App\Http\Controllers\Api\BlogApiController;
 use App\Http\Controllers\Api\Admin\BlogPostApiController;
+use App\Http\Controllers\Api\RecommendationController;
 
 // AUTH
 Route::post('login', [AuthController::class, 'login']);
@@ -30,6 +31,9 @@ Route::middleware('auth:sanctum')->group(function() {
     // PROFILE PHOTO
     Route::post('profile/photo', [\App\Http\Controllers\Api\ProfilePhotoController::class, 'update']);
 });
+
+// Public endpoint
+Route::get('/recommendations', [RecommendationController::class, 'index']);
 
 // BLOG
 Route::get('blog-posts', [BlogPostController::class, 'index']);

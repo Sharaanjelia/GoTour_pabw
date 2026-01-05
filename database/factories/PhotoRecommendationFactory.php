@@ -11,9 +11,13 @@ class PhotoRecommendationFactory extends Factory
 
     public function definition()
     {
+        $categories = ['landscape', 'portrait', 'nature', 'urban', 'travel', 'wildlife', 'architecture'];
+        
         return [
             'title' => $this->faker->sentence(3),
-            'description' => $this->faker->sentence(),
+            'description' => $this->faker->paragraph(),
+            'category' => $this->faker->randomElement($categories),
+            'tips' => $this->faker->paragraph(2),
             'is_active' => true,
         ];
     }

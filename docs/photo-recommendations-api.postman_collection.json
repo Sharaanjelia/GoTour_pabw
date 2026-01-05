@@ -1,0 +1,227 @@
+{
+  "info": {
+    "name": "GoTour Photo Recommendations API",
+    "_postman_id": "photo-recommendations-api",
+    "description": "API Collection untuk Photo Recommendations GoTour PABW",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Photo Recommendations",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/photo-recommendations",
+          "host": ["{{base_url}}"],
+          "path": ["api", "photo-recommendations"]
+        },
+        "description": "Mengambil semua data photo recommendations dengan pagination"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Photo Recommendations - Paginated",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/photo-recommendations?per_page=10",
+          "host": ["{{base_url}}"],
+          "path": ["api", "photo-recommendations"],
+          "query": [
+            {
+              "key": "per_page",
+              "value": "10"
+            }
+          ]
+        },
+        "description": "Mengambil data dengan pagination custom (10 items per page)"
+      },
+      "response": []
+    },
+    {
+      "name": "Filter by Category - Portrait",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/photo-recommendations?category=portrait",
+          "host": ["{{base_url}}"],
+          "path": ["api", "photo-recommendations"],
+          "query": [
+            {
+              "key": "category",
+              "value": "portrait"
+            }
+          ]
+        },
+        "description": "Filter foto berdasarkan kategori portrait"
+      },
+      "response": []
+    },
+    {
+      "name": "Filter by Category - Nature",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/photo-recommendations?category=nature",
+          "host": ["{{base_url}}"],
+          "path": ["api", "photo-recommendations"],
+          "query": [
+            {
+              "key": "category",
+              "value": "nature"
+            }
+          ]
+        },
+        "description": "Filter foto berdasarkan kategori nature"
+      },
+      "response": []
+    },
+    {
+      "name": "Filter by Category - Urban",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/photo-recommendations?category=urban",
+          "host": ["{{base_url}}"],
+          "path": ["api", "photo-recommendations"],
+          "query": [
+            {
+              "key": "category",
+              "value": "urban"
+            }
+          ]
+        },
+        "description": "Filter foto berdasarkan kategori urban"
+      },
+      "response": []
+    },
+    {
+      "name": "Filter by Category - Travel",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/photo-recommendations?category=travel",
+          "host": ["{{base_url}}"],
+          "path": ["api", "photo-recommendations"],
+          "query": [
+            {
+              "key": "category",
+              "value": "travel"
+            }
+          ]
+        },
+        "description": "Filter foto berdasarkan kategori travel"
+      },
+      "response": []
+    },
+    {
+      "name": "Search - Golden Hour",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/photo-recommendations?search=golden",
+          "host": ["{{base_url}}"],
+          "path": ["api", "photo-recommendations"],
+          "query": [
+            {
+              "key": "search",
+              "value": "golden"
+            }
+          ]
+        },
+        "description": "Search kata 'golden' di title, description, dan tips"
+      },
+      "response": []
+    },
+    {
+      "name": "Search - Santai",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/photo-recommendations?search=santai",
+          "host": ["{{base_url}}"],
+          "path": ["api", "photo-recommendations"],
+          "query": [
+            {
+              "key": "search",
+              "value": "santai"
+            }
+          ]
+        },
+        "description": "Search kata 'santai' di semua field"
+      },
+      "response": []
+    },
+    {
+      "name": "Combined Filters",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/photo-recommendations?category=portrait&search=elegan&per_page=5",
+          "host": ["{{base_url}}"],
+          "path": ["api", "photo-recommendations"],
+          "query": [
+            {
+              "key": "category",
+              "value": "portrait"
+            },
+            {
+              "key": "search",
+              "value": "elegan"
+            },
+            {
+              "key": "per_page",
+              "value": "5"
+            }
+          ]
+        },
+        "description": "Kombinasi filter kategori, search, dan pagination"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Single Photo Recommendation",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/photo-recommendations/13",
+          "host": ["{{base_url}}"],
+          "path": ["api", "photo-recommendations", "13"]
+        },
+        "description": "Mengambil detail satu photo recommendation berdasarkan ID"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Single Photo - Not Found",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/photo-recommendations/999",
+          "host": ["{{base_url}}"],
+          "path": ["api", "photo-recommendations", "999"]
+        },
+        "description": "Test error handling untuk ID yang tidak ditemukan"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    }
+  ]
+}

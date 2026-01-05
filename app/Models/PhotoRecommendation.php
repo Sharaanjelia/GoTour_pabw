@@ -10,7 +10,7 @@ class PhotoRecommendation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title','image','description','is_active'];
+    protected $fillable = ['title','image','description','category','tips','is_active'];
 
     protected $casts = [
         'is_active' => 'boolean',

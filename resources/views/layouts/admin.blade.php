@@ -14,7 +14,7 @@
     <div class="admin-shell">
       <aside class="admin-sidebar">
         <div class="logo">
-          <img src="{{ asset('images/logo.png') }}" alt="GoTour Logo" onerror="this.style.display='none'" />
+          <img src="{{ asset('images/GoTourLogo.png') }}" alt="GoTour Logo" style="width: 40px; height: 40px; object-fit: contain;" />
           <h2 style="margin:0;">GOTOUR</h2>
         </div>
         <nav class="admin-nav">
