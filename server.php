@@ -29,6 +29,47 @@ $sendCorsHeaders = static function (): void {
     header('Access-Control-Max-Age: 86400');
 };
 
+$isHead = (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'HEAD');
+
+$getMimeType = static function (string $path): string {
+    $ext = strtolower((string) pathinfo($path, PATHINFO_EXTENSION));
+
+    // Prefer deterministic mapping (Windows often lacks fileinfo/mime_content_type).
+    $map = [
+        'css' => 'text/css; charset=utf-8',
+        'js' => 'application/javascript; charset=utf-8',
+        'mjs' => 'application/javascript; charset=utf-8',
+        'json' => 'application/json; charset=utf-8',
+        'map' => 'application/json; charset=utf-8',
+        'html' => 'text/html; charset=utf-8',
+        'htm' => 'text/html; charset=utf-8',
+        'txt' => 'text/plain; charset=utf-8',
+        'svg' => 'image/svg+xml',
+        'png' => 'image/png',
+        'jpg' => 'image/jpeg',
+        'jpeg' => 'image/jpeg',
+        'webp' => 'image/webp',
+        'gif' => 'image/gif',
+        'ico' => 'image/x-icon',
+        'woff' => 'font/woff',
+        'woff2' => 'font/woff2',
+        'ttf' => 'font/ttf',
+        'otf' => 'font/otf',
+        'eot' => 'application/vnd.ms-fontobject',
+    ];
+
+    if ($ext !== '' && isset($map[$ext])) {
+        return $map[$ext];
+    }
+
+    $detected = function_exists('mime_content_type') ? @mime_content_type($path) : null;
+    if (is_string($detected) && $detected !== '') {
+        return $detected;
+    }
+
+    return 'application/octet-stream';
+};
+
 // Handle CORS preflight for /storage/*
 if ($isOptions && $startsWith($uri, '/storage/')) {
     $sendCorsHeaders();
@@ -45,18 +86,24 @@ if ($uri !== '/' && !str_contains($uri, '..')) {
             $sendCorsHeaders();
         }
 
-        $mimeType = function_exists('mime_content_type') ? @mime_content_type($filePath) : null;
-        if (!is_string($mimeType) || $mimeType === '') {
-            $mimeType = 'application/octet-stream';
-        }
-
-        header('Content-Type: ' . $mimeType);
+        $contentType = $getMimeType($filePath);
+        header('Content-Type: ' . $contentType);
         header('Content-Length: ' . (string) filesize($filePath));
 
-        // Basic caching for static files
-        header('Cache-Control: public, max-age=3600');
+        // Dev-friendly caching: prevent browsers from keeping a previously-wrong MIME type
+        // for CSS/JS in cache.
+        $ext = strtolower((string) pathinfo($filePath, PATHINFO_EXTENSION));
+        if (in_array($ext, ['css', 'js', 'mjs', 'map', 'json', 'html', 'htm'], true)) {
+            header('Cache-Control: no-store, max-age=0');
+            header('Pragma: no-cache');
+            header('Expires: 0');
+        } else {
+            header('Cache-Control: public, max-age=3600');
+        }
 
-        readfile($filePath);
+        if (!$isHead) {
+            readfile($filePath);
+        }
         exit;
     }
 }
